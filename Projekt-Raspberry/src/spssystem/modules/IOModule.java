@@ -1,4 +1,7 @@
-package spssystem;
+package spssystem.modules;
+
+import spssystem.IOSystem;
+import spssystem.SPSSystem;
 
 public abstract class IOModule {
 	

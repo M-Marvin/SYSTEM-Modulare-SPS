@@ -1,5 +1,13 @@
 package spssystem;
 
+import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioPinDigitalInput;
+import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.PinPullResistance;
+import com.pi4j.io.gpio.PinState;
+import com.pi4j.io.gpio.RaspiPin;
+
 public class IOSystem {
 	
 	protected boolean clockPulseState;
@@ -8,13 +16,46 @@ public class IOSystem {
 	protected byte[] outputList;
 	protected byte[] outputBytes;
 	
+	protected GpioController gpio;
+	protected GpioPinDigitalOutput outputEnable;
+	protected GpioPinDigitalOutput outputSync;
+	protected GpioPinDigitalOutput outputCom1;
+	protected GpioPinDigitalOutput outputCom2;
+	protected GpioPinDigitalInput inputCom1;
+	protected GpioPinDigitalInput inputCom2;
+	
 	public IOSystem() {
 		this.inputBytes = new byte[0];
 		this.inputList = new byte[0];
 		this.outputBytes = new byte[0];
 		this.outputList = new byte[0];
+		
+		try {
+			gpio = GpioFactory.getInstance();
+			outputEnable = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "enable", PinState.LOW);
+			outputEnable.setShutdownOptions(true, PinState.LOW, PinPullResistance.OFF);
+			outputSync = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_08, "sync", PinState.LOW);
+			outputSync.setShutdownOptions(true, PinState.LOW, PinPullResistance.OFF);
+			outputCom1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_09, "oCom1", PinState.LOW);
+			outputCom1.setShutdownOptions(true, PinState.LOW, PinPullResistance.OFF);
+			outputCom2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07, "oCom2", PinState.LOW);
+			outputCom2.setShutdownOptions(true, PinState.LOW, PinPullResistance.OFF);
+			inputCom1 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_00, "iCom1");
+			inputCom1.setPullResistance(PinPullResistance.PULL_DOWN);
+			inputCom2 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, "iCom2");
+			inputCom2.setPullResistance(PinPullResistance.PULL_DOWN);
+		} catch (UnsatisfiedLinkError e) {
+			System.err.println("SPSSystem cant connect to wiringPi netive Lib!");
+			System.err.println(e.getMessage());
+			System.exit(-1);
+		}
+		
 	}
-
+	
+	public void shutdown() {
+		this.gpio.shutdown();
+	}
+	
 	public void registerInputRange(byte adress, byte byteWidth, int requestTime) {
 		
 		inputList = ByteUtility.mergeData(inputList, new byte[] {adress, byteWidth}, ByteUtility.intToBytes(requestTime));
@@ -113,8 +154,20 @@ public class IOSystem {
 		
 	}
 	
+	protected void waitTick() {
+		try {
+			Thread.sleep(0, 100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void readInputs() {
 
+		setLow();
+		outputEnable.high();
+		
 		long sysClock = SPSSystem.getSystem().getSystemClock();
 		int ioByteOffset = 0;
 		
@@ -126,18 +179,32 @@ public class IOSystem {
 			
 			if (sysClock % requestTime == 0) {
 				
-				byte[] data = readModul(adress, byteWidth);
-				ByteUtility.replaceBytes(this.inputBytes, ioByteOffset, data);
+				waitTick();
+				
+				byte[] data = readModul(adress);
+				
+				if (data.length >= byteWidth) {
+					
+					byte[] data2 = ByteUtility.copyArr(data, 0, byteWidth);
+					ByteUtility.replaceBytes(this.inputBytes, ioByteOffset, data2);
+					
+				}
 				
 			}
 			
 			ioByteOffset += byteWidth;
 			
 		}
+
+		setLow();
+		outputEnable.low();
 		
 	}
 	
 	public void writeOutputs() {
+		
+		setLow();
+		outputEnable.high();
 		
 		long sysClock = SPSSystem.getSystem().getSystemClock();
 		int ioByteOffset = 0;
@@ -149,6 +216,8 @@ public class IOSystem {
 			int requestTime = ByteUtility.bytesToInt(ByteUtility.copyArr(outputList, modCnt + 2, modCnt + 5));
 			
 			if (sysClock % requestTime == 0) {
+
+				waitTick();
 				
 				byte[] data = ByteUtility.copyArr(this.outputBytes, ioByteOffset, ioByteOffset + byteWidth - 1);
 				writeModul(adress, data);
@@ -158,20 +227,48 @@ public class IOSystem {
 			ioByteOffset += byteWidth;
 			
 		}
+
+		setLow();
+		outputEnable.low();
 		
 	}
 	
-	protected byte[] readModul(byte adress, byte byteWidth) {
+	public byte[] writeAdressConfig(byte adress, byte masterAdress) {
 		
+		setLow();
+		outputEnable.high();
+		
+		byte[] data = new byte[] {adress};
+		writeModul(masterAdress, data);
+		byte[] response = readBytes();
+		
+		setLow();
+		outputEnable.low();
+		
+		return response;
+		
+	}
+	
+	protected void setLow() {
+
+		outputSync.low();
+		outputCom1.low();
+		outputCom2.low();
+		
+	}
+	
+	protected byte[] readModul(byte adress) {
+		
+		sendByte((byte) 1);
 		sendByte(adress);
-		return readBytes(byteWidth);
+		return readBytes();
 				
 	}
 	
 	protected void writeModul(byte adress, byte[] data) {
 		
+		sendByte((byte) (data.length + 1));
 		sendByte(adress);
-		sendByte((byte) data.length);
 		for (int bc = 0; bc < (byte) data.length; bc++) sendByte(data[bc]);
 		
 	}
@@ -180,12 +277,15 @@ public class IOSystem {
 	
 	protected void sendByte(byte b) {
 		
+		boolean 
+		gpio1 = false, 
+		gpio2 = false, 
+		gpio3 = false;
+		
 		byteParser = 0;
-		while (byteParser < 8) {
+		while (byteParser <= 6 || gpio1) {
 			
 			clockPulseState = !clockPulseState;
-			
-			boolean gpio1, gpio2, gpio3;
 			
 			if (clockPulseState) {
 				
@@ -196,34 +296,42 @@ public class IOSystem {
 				
 			} else {
 				
-				gpio1 = gpio2 = gpio3 = false;
+				gpio1 = false;
 				
 			}
 			
-			System.out.println(gpio1 + " " + gpio2 + " " + gpio3);
-			// TODO SET GPIO
+			outputSync.setState(!gpio1);
+			outputCom1.setState(gpio2);
+			outputCom2.setState(gpio3);
+			
+			waitTick();
 			
 		}
+		clockPulseState = false;
+		outputSync.setState(clockPulseState);
+		waitTick();
 		
 	}
 	
-	protected byte[] readBytes(byte bytes) {
+	protected byte[] readBytes() {
 		
-		byte[] data = new byte[bytes];
+		setLow();
+		
+		byte length = -1;
+		byte[] data = null;
 		byte currentByte = 0;
 		
 		byteParser = 0;
-		while (byteParser < bytes * 8) {
+		while (byteParser / 8 < length || length == -1) {
 			
-			// TODO SET GPIO (1)
+			outputSync.setState(clockPulseState);
 			
 			clockPulseState = !clockPulseState;
 			
-			if (clockPulseState) {
+			if (!clockPulseState) {
 				
-				// TODO READ GPIO
-				boolean gpio4 = true;
-				boolean gpio5 = true;
+				boolean gpio4 = inputCom1.getState() == PinState.HIGH;
+				boolean gpio5 = inputCom2.getState() == PinState.HIGH;
 				
 				currentByte |= ((gpio4 ? 1 : 0) << (byteParser % 8));
 				currentByte |= ((gpio5 ? 1 : 0) << ((byteParser + 1) % 8));
@@ -231,13 +339,28 @@ public class IOSystem {
 				byteParser += 2;
 				
 				if (byteParser % 8 == 0) {
-					data[byteParser / 8] = currentByte;
+					
+					if (length == -1) {
+						length = currentByte;
+						byteParser = 0;
+						data = new byte[length];
+					} else if (byteParser / 8 < data.length){
+						data[byteParser / 8] = currentByte;
+						System.out.println("recive " + currentByte);
+					}
 					currentByte = 0;
+					
 				}
 				
 			}
+
+			waitTick();
 			
 		}
+		
+		clockPulseState = false;
+		outputSync.setState(clockPulseState);
+		waitTick();
 		
 		return data;
 		

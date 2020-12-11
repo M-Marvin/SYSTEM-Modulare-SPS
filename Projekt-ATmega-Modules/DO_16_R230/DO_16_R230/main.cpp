@@ -1,37 +1,26 @@
 /*
- * main.c
+ * comInterface.c
  *
  * Created: 11/16/2020 7:30:22 PM
  *  Author: Marvin
  * 
  * PIN CONFIG
  * Relays
- * PORTD 0-7 + PORTC 0-3
+ * PORTD 0-7 + PORTB 0-7
  * COM Serial OUT
- * PORTB 0-2
+ * PORTC 0-1
  * COM Serial IN
- * PINB 3-5
- * COM Clock
- * PINB 6
- * 
- * Free
- * PB 7 + PC 4-5
- *
+ * PORTC 2-3
+ * Clock
+ * PINC 4
  */ 
 
-#include <xc.h>
-#include <comInterface.c>
+#include "system.cpp"
 
 int main(void)
 {
-	ICOM COM;
 	
-	
-	while(1)
-    {
-		
-		COM.update(void);
-				
-    }
+	System sys;
+	sys.start();
 	
 }

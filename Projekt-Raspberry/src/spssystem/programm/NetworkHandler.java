@@ -12,6 +12,7 @@ public class NetworkHandler extends INetComHandler {
 		super(network);
 	}
 	
+	@SuppressWarnings("unused")
 	@Override
 	public void onDataRecived(String ip, int port, byte[] data) {
 		

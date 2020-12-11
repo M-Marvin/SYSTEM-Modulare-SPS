@@ -1,3 +1,4 @@
+
 /*
  * comInterface.c
  *
@@ -6,112 +7,221 @@
  * 
  * PIN CONFIG
  * Relays
- * PORTD 0-7 + PORTC 0-3
+ * PORTD 0-7 + PORTB 0-7
  * COM Serial OUT
- * PORTB 0-2
+ * PORTC 0-1
  * COM Serial IN
- * PINB 3-5
- * COM Clock
- * PINB 6
- * 
- * Free
- * PB 7 + PC 4-5
- *
+ * PORTC 2-3
+ * PORTC Clock
+ * PINC 4
  */ 
 
-public static class ICOM {
+#include <avr/io.h>
+
+class ICOM {
 	
-	int recivedData[];
-	int recivedDataLength = 0;
-	int remainingRecivePackets = 0;
+	const static int8_t PINC_CLCK = 0x10;
+	const static int8_t PORTC_COM_1 = 0x1;
+	const static int8_t PORTC_COM_2 = 0x2;
+	const static int8_t PINC_COM_1 = 0x4;
+	const static int8_t PINC_COM_2 = 0x8;
+	const static int8_t PINC_ENABLE = 0x20;
+	
+	bool doRead;
+	int8_t recivedData[255] {0};
+	int8_t recivedDataLength;
+	int8_t remainingRecivePackets;
+	int8_t byteBuffer;
+	int8_t byteBufferPointer;
 
-	int sendData[];
-	int sendDataLength = 0;
-	int remainingSendPackets = 0;
-	bool hasSendStartByte = false;
-
-	bool hasHandledClckPulse = false;
-
-	public void update(void)
-	{
+	bool doSend;
+	int8_t sendData[255] {0};
+	int8_t sendDataLength;
+	int8_t remainingSendPackets;
+	int8_t byteBuffer2;
+	int8_t byteBufferPointer2;
+	
+	bool hasHandledClckPulse;
+	int8_t handleTimer;
+	
+	bool enableListening;
+	
+	public: ICOM () {
 		
-		bool clckHigh = (PINB & 0x40) > 0;
+		reset();
 		
-		if (clckHigh && !hasHandledClckPulse) {
+		hasHandledClckPulse = false;
+		handleTimer = 0;
+		enableListening = false;
+		
+		DDRC = PORTC_COM_1 | PORTC_COM_2;
+		
+	}
+
+	public: void update() {
+		
+		bool enable = (PINC & PINC_ENABLE) > 0;
+		
+		if (!enableListening && !enable) enableListening = true;
+		
+		if (enable && enableListening)  {
 			
-			hasHandledClckPulse = true;
+			bool clckHigh = (PINC & PINC_CLCK) > 0;
 			
-			// get recived Value
-			int recived = (PINB >> 2) & 0x7;
-			
-			if (remainingRecivePackets == 0) {
-				
-				// Set RemainingPackets to recived Value
-				remainingRecivePackets = recived;
-				recivedData = int[recived];
-				recivedDataLength = recived;
-				
-				} else {
-				
-				// Add recived Value to recivedPackets and count as Packet
-				recivedData[recivedData - remainingRecivePackets] = recived;
-				remainingRecivePackets--;
-				
+			if (clckHigh && !hasHandledClckPulse) {
+				handleTimer = 0;
+			} else if (hasHandledClckPulse) {
+				handleTimer++;
 			}
 			
-			// set send Value
-			if (remainingSendPackets > 0) {
+			if (clckHigh && !hasHandledClckPulse) {
 				
-				if (!hasSendStartByte) {
+				hasHandledClckPulse = true;
+				
+				if (!isSending()) {
 					
-					// send Length of Data as first Packet
-					hasSendStartByte = true;
-					int send = sendDataLength;
+					// Send Ports Low
+					PORTC = (PORTC & ~PORTC_COM_1);
+					PORTC = (PORTC & ~PORTC_COM_2);
 					
-					int portState = PORTB;
-					portState = (portState | send) & (send | 0xF8);
-					PORTB = portState;
+					// get recived Value
+					bool recivedBit1 = (PINC & PINC_COM_1) > 0;
+					bool recivedBit2 = (PINC & PINC_COM_2) > 0;
+					byteBuffer |= (recivedBit1 << (byteBufferPointer + 0));
+					byteBuffer |= (recivedBit2 << (byteBufferPointer + 1));
+					byteBufferPointer += 2;
 					
-					} else {
+					if (byteBufferPointer >= 8) {
+						
+						int8_t recived = byteBuffer;
+						byteBuffer = 0;
+						byteBufferPointer = 0;
+						
+						if (remainingRecivePackets == 0 && recived > 0 && !isSending() && !isReading()) {
+							
+							// Set RemainingPackets to recived Value and Start Reading
+							doRead = true;
+							remainingRecivePackets = recived;
+							recivedData[recived] = {0};
+							recivedDataLength = recived;
+							return;
+							
+						}
+						
+						if (isReading()) {
+							
+							// Add recived Value to recivedPackets and count as Packet
+							recivedData[recivedDataLength - remainingRecivePackets] = recived;
+							remainingRecivePackets--;
+							
+							if (remainingRecivePackets == 0) {
+								
+								doRead = false;
+								
+							}
+							
+						}
+						
+					}
 					
-					// send Packet
-					int send = sendData[recivedDataLength - remainingRecivePackets];
-					remainingSendPackets--;
+				} else if (!isReading()) {
 					
-					int portState = PORTB;
-					portState = (portState | send) & (send | 0xF8);
-					PORTB = portState;
+					if (byteBufferPointer2 <= 0) {
+						
+						byteBuffer2 = sendData[sendDataLength - remainingSendPackets];
+						byteBufferPointer2 = 7;
+						
+					}
+					
+					bool sendBit1 = (byteBuffer2 & (1 << (byteBufferPointer2 - 0)));
+					bool sendBit2 = (byteBuffer2 & (1 << (byteBufferPointer2 - 1)));
+					PORTC = (PORTC & ~PORTC_COM_1) | (sendBit1 ? PORTC_COM_1 : 0);
+					PORTC = (PORTC & ~PORTC_COM_2) | (sendBit2 ? PORTC_COM_2 : 0);
+					byteBufferPointer2 -= 2;
+					
+					if (byteBufferPointer2 <= 0) remainingSendPackets--;
+					
+					if (remainingSendPackets == 0) {
+						
+						doSend = false;
+						sendDataLength = 0;
+						
+					}
 					
 				}
 				
+			} else if (hasHandledClckPulse && !clckHigh) {
+				hasHandledClckPulse = false;
 			}
 			
-			} else if (hasHandledClckPulse && !clckHigh) {
-			hasHandledClckPulse = false;
+			if (handleTimer > 2000) {
+				
+				reset();
+				handleTimer = 0;
+				
+			}
+			
 		}
 		
 	}
-
-	public bool hasData()
-	{
-		return remainingRecivePackets == 0 && recivedDataLength > 0;
+	
+	public: void reset() {
+		doRead = false;
+		recivedData[255] = {0};
+		recivedDataLength = 0;
+		remainingRecivePackets = 0;
+		byteBuffer = 0;
+		byteBufferPointer = 0;
+		
+		doSend = false;
+		sendData[255] = {0};
+		sendDataLength = 0;
+		remainingSendPackets = 0;
+		byteBuffer2 = 0;
+		byteBufferPointer2 = 0;
 	}
-
-	public int[] getData()
+	
+	public: int hasData()
+	{
+		if (recivedDataLength > 0 && !isReading()) {
+			return recivedDataLength;
+		} else {
+			return 0;
+		}
+	}
+	
+	public: int8_t* getData()
 	{
 		recivedDataLength = 0;
-		return recivedData;
+		int8_t* data = recivedData;
+		recivedData[255] = {0};
+		return data;
 	}
 
-	public void sendData(int[] data)
+	public: void setSendData(int8_t* data, int8_t length)
 	{
-		sendData = data;
-		remainingSendPackets = *(&data + 1) - data;
-		sendDataLength = *(&data + 1) - data;
+		for (int8_t i = 0; i < length; i++) sendData[i + 1] = data[i];
+		sendData[0] = length;
+		remainingSendPackets = length + 1;
+		sendDataLength = length + 1;
+	}
+	
+	public: void startSending() {
+		
+		if (remainingSendPackets > 0 && !isReading() && !isSending()) doSend = true;
+		
+	}
+	
+	public: bool isDataSend() {
+		return sendDataLength == 0 && !isSending();
 	}
 
-	public bool isSending() {
-		return remainingSendPackets > 0;
+	public: bool isSending() {
+		return remainingSendPackets > 0 && doSend;
 	}
-
+	
+	public: bool isReading() {
+		return remainingRecivePackets > 0 && doRead;
+	}
+	
 };

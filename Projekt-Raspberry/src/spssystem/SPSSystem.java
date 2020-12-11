@@ -1,5 +1,6 @@
 package spssystem;
 
+import config.SystemConfigurator;
 import netcom.NetCom;
 import spssystem.programm.NetworkHandler;
 import spssystem.programm.Programm;
@@ -20,7 +21,24 @@ public class SPSSystem {
 	
 	public static void main(String[] args) {
 		
-		new SPSSystem().start();
+		boolean configMode = false;
+		
+		for (String arg : args) {
+			if (arg.equals("-configMode")) configMode = true;
+		}
+		
+		if (configMode) {
+			
+			new SystemConfigurator().start();
+			
+		} else {
+
+			new SPSSystem().start();
+			
+		}
+		
+		System.out.println("End SPSSystem, shutdown!");
+		System.exit(0);
 		
 	}
 	
@@ -42,16 +60,22 @@ public class SPSSystem {
 	
 	public void start() {
 		
+		System.out.println("Start SPSSystem!");
+
+		System.out.println("Initialisate...");
+		
 		instance = this;
 		
+		this.ioSystem = new IOSystem();
+
 		this.network = new NetCom();
 		this.network.openConnectServer(SPS_PORT);
 		this.networkHandler = network.createHandler(NetworkHandler::new);
 		
-		this.ioSystem = new IOSystem();
-		
 		this.prog = new Programm();
 		this.prog.onStart();
+
+		System.out.println("Start Programm!");
 		
 		isRunning = true;
 		while (isRunning) {
@@ -74,7 +98,10 @@ public class SPSSystem {
 		}
 		
 		this.prog.onStop();
+
+		System.out.println("End of Programm, shutdown ...");
 		
+		this.ioSystem.shutdown();
 		this.network.closeServer();
 		
 	}
