@@ -1,6 +1,7 @@
 
 /*
  * comInterface.c
+ * Communication Protokoll for Modular Raspberry SPS Modules
  *
  * Created: 11/16/2020 7:30:22 PM
  *  Author: Marvin

@@ -1,11 +1,13 @@
 /*
  * CPPFile1.cpp
+ * Modul System fpr DO_16_R230
  *
  * Created: 11.12.2020 16:06:42
  *  Author: marvi
  */ 
 
 #include <avr/io.h>
+#include <avr/eeprom.h>
 #include "comInterface.cpp"
 
 class System {
@@ -28,6 +30,8 @@ class System {
 		DDRB = 0xFF;
 		
 		ICOM com;
+		
+		loadAdress();
 		
 		while(1)
 		{
@@ -61,7 +65,7 @@ class System {
 					
 					if (dataLength == 2) {
 						
-						address = data[1];
+						setAdress(data[1]);
 						int8_t confirmMsg[2] = {0};
 						confirmMsg[0] = MASTER_ADRESS;
 						confirmMsg[1] = address;
@@ -82,5 +86,15 @@ class System {
 		
 	}
 	
+	public: void setAdress(int8_t adress) {
+		uint8_t data = (uint8_t) adress;
+		eeprom_update_byte((uint8_t *) 0x0, data);
+		loadAdress();
+	}
+	
+	public: void loadAdress() {
+		uint8_t data = eeprom_read_byte((uint8_t *) 0x0);
+		address = (int8_t) data;
+	}
 	
 };

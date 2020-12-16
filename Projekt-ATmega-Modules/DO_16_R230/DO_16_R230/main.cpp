@@ -1,5 +1,6 @@
 /*
  * comInterface.c
+ * Module main file
  *
  * Created: 11/16/2020 7:30:22 PM
  *  Author: Marvin
