@@ -14,7 +14,7 @@ class System {
 	const static int8_t MASTER_ADRESS = 0x0;
 	
 	// Time to set the adress, after RESET
-	const static int BOOT_LOCK_TIME = 5000;
+	const static long BOOT_LOCK_TIME = 5000;
 	
 	// Address of the module!
 	int8_t address = 1;
@@ -43,12 +43,13 @@ class System {
 					if (dataLength == 1) {
 						
 						int8_t portStates[2] = {0};
-						portStates[0] = PORTC;
-						portStates[1] = PORTC;
+							
+							portStates[0] = PORTC;
+							portStates[1] = PORTC;
 						
-						com.setSendData(portStates, 2);
-						com.startSending();
-						
+							com.setSendData(portStates, 2);
+							com.startSending();
+							
 						} else if (dataLength == 3) {
 						
 						PORTD = data[0];
@@ -57,9 +58,6 @@ class System {
 					}
 					
 				} else if (data[0] == MASTER_ADRESS && bootTimer < BOOT_LOCK_TIME) {
-					
-					PORTB = data[1];
-					PORTC = data[1];
 					
 					if (dataLength == 2) {
 						

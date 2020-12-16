@@ -26,6 +26,7 @@ class ICOM {
 	const static int8_t PINC_COM_1 = 0x4;
 	const static int8_t PINC_COM_2 = 0x8;
 	const static int8_t PINC_ENABLE = 0x20;
+	const static int MAX_TIMEOUT = 2000;
 	
 	bool doRead;
 	int8_t recivedData[255] {0};
@@ -34,6 +35,7 @@ class ICOM {
 	int8_t byteBuffer;
 	int8_t byteBufferPointer;
 
+	bool requestSend;
 	bool doSend;
 	int8_t sendData[255] {0};
 	int8_t sendDataLength;
@@ -62,12 +64,14 @@ class ICOM {
 		
 		bool enable = (PINC & PINC_ENABLE) > 0;
 		
+		// Prevent listening to half message (on startup)
 		if (!enableListening && !enable) enableListening = true;
 		
 		if (enable && enableListening)  {
 			
 			bool clckHigh = (PINC & PINC_CLCK) > 0;
 			
+			// Count up handleTimer when no clckPulses
 			if (clckHigh && !hasHandledClckPulse) {
 				handleTimer = 0;
 			} else if (hasHandledClckPulse) {
@@ -79,10 +83,6 @@ class ICOM {
 				hasHandledClckPulse = true;
 				
 				if (!isSending()) {
-					
-					// Send Ports Low
-					PORTC = (PORTC & ~PORTC_COM_1);
-					PORTC = (PORTC & ~PORTC_COM_2);
 					
 					// get recived Value
 					bool recivedBit1 = (PINC & PINC_COM_1) > 0;
@@ -108,13 +108,13 @@ class ICOM {
 							
 						}
 						
-						if (isReading()) {
+						if (isReading() && remainingRecivePackets > 0) {
 							
 							// Add recived Value to recivedPackets and count as Packet
 							recivedData[recivedDataLength - remainingRecivePackets] = recived;
 							remainingRecivePackets--;
 							
-							if (remainingRecivePackets == 0) {
+							if (remainingRecivePackets <= 0) {
 								
 								doRead = false;
 								
@@ -124,24 +124,28 @@ class ICOM {
 						
 					}
 					
-				} else if (!isReading()) {
+				} else if (!isReading() && remainingSendPackets >= 0) {
 					
-					if (byteBufferPointer2 <= 0) {
+					// Send Ports Low
+					PORTC = (PORTC & ~PORTC_COM_1);
+					PORTC = (PORTC & ~PORTC_COM_2);
+					
+					if (byteBufferPointer2 >= 8) {
 						
 						byteBuffer2 = sendData[sendDataLength - remainingSendPackets];
-						byteBufferPointer2 = 7;
+						byteBufferPointer2 = 0;
 						
 					}
 					
-					bool sendBit1 = (byteBuffer2 & (1 << (byteBufferPointer2 - 0)));
-					bool sendBit2 = (byteBuffer2 & (1 << (byteBufferPointer2 - 1)));
+					bool sendBit1 = (byteBuffer2 & (1 << (byteBufferPointer2 + 0)));
+					bool sendBit2 = (byteBuffer2 & (1 << (byteBufferPointer2 + 1)));
 					PORTC = (PORTC & ~PORTC_COM_1) | (sendBit1 ? PORTC_COM_1 : 0);
 					PORTC = (PORTC & ~PORTC_COM_2) | (sendBit2 ? PORTC_COM_2 : 0);
-					byteBufferPointer2 -= 2;
+					byteBufferPointer2 += 2;
+							
+					if (byteBufferPointer2 >= 8) remainingSendPackets--;
 					
-					if (byteBufferPointer2 <= 0) remainingSendPackets--;
-					
-					if (remainingSendPackets == 0) {
+					if (remainingSendPackets < 0) {
 						
 						doSend = false;
 						sendDataLength = 0;
@@ -151,10 +155,18 @@ class ICOM {
 				}
 				
 			} else if (hasHandledClckPulse && !clckHigh) {
+				
+				// Start sending wehen reading complete
+				if (requestSend && !doRead) {
+					doSend = true;
+					requestSend = false;
+				}
+				
 				hasHandledClckPulse = false;
 			}
 			
-			if (handleTimer > 2000) {
+			// Reset all when handleTimer > MAX_TIMEOUT
+			if (handleTimer > MAX_TIMEOUT) {
 				
 				reset();
 				handleTimer = 0;
@@ -173,12 +185,14 @@ class ICOM {
 		byteBuffer = 0;
 		byteBufferPointer = 0;
 		
+		requestSend = false;
+		
 		doSend = false;
 		sendData[255] = {0};
 		sendDataLength = 0;
 		remainingSendPackets = 0;
 		byteBuffer2 = 0;
-		byteBufferPointer2 = 0;
+		byteBufferPointer2 = 8;
 	}
 	
 	public: int hasData()
@@ -200,15 +214,19 @@ class ICOM {
 
 	public: void setSendData(int8_t* data, int8_t length)
 	{
-		for (int8_t i = 0; i < length; i++) sendData[i + 1] = data[i];
+		sendData[length + 1] = {0};
 		sendData[0] = length;
-		remainingSendPackets = length + 1;
-		sendDataLength = length + 1;
+		for (int8_t i = 0; i < length; i++) sendData[i + 1] = data[i];
+		remainingSendPackets = length;
+		sendDataLength = length;
+		byteBuffer2 = 0;
+		byteBufferPointer2 = 8;
+		
 	}
 	
 	public: void startSending() {
 		
-		if (remainingSendPackets > 0 && !isReading() && !isSending()) doSend = true;
+		if (remainingSendPackets > 0 && !isSending()) requestSend = true;
 		
 	}
 	
@@ -217,7 +235,7 @@ class ICOM {
 	}
 
 	public: bool isSending() {
-		return remainingSendPackets > 0 && doSend;
+		return remainingSendPackets >= 0 && doSend;
 	}
 	
 	public: bool isReading() {

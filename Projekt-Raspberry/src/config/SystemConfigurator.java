@@ -161,10 +161,6 @@ public class SystemConfigurator extends JFrame {
 		if (isSettingAdress()) {
 			
 			byte[] response = ioInstance.writeAdressConfig((byte) setAdress, (byte) masterAdress);
-
-			System.out.println("DDDDD ");
-			
-			for (byte b : response) System.out.print(b);
 			
 			if (response.length == 2) {
 				

@@ -277,38 +277,38 @@ public class IOSystem {
 	
 	protected void sendByte(byte b) {
 		
+		setLow();
+		clockPulseState = false;
+		
 		boolean 
-		gpio1 = false, 
-		gpio2 = false, 
-		gpio3 = false;
+		reciveBit1 = false, 
+		reciveBit2 = false;
 		
 		byteParser = 0;
-		while (byteParser <= 6 || gpio1) {
+		while (byteParser <= 6) {
 			
 			clockPulseState = !clockPulseState;
 			
 			if (clockPulseState) {
 				
-				gpio1 = true;
-				gpio2 = (b & (1 << byteParser)) > 0;
-				gpio3 = (b & (1 << (byteParser + 1))) > 0;
+				reciveBit1 = (b & (1 << byteParser)) > 0;
+				reciveBit2 = (b & (1 << (byteParser + 1))) > 0;
 				byteParser += 2;
-				
-			} else {
-				
-				gpio1 = false;
 				
 			}
 			
-			outputSync.setState(!gpio1);
-			outputCom1.setState(gpio2);
-			outputCom2.setState(gpio3);
+			outputCom1.setState(reciveBit1);
+			outputCom2.setState(reciveBit2);
+			outputSync.setState(clockPulseState);
 			
 			waitTick();
 			
 		}
+		
 		clockPulseState = false;
 		outputSync.setState(clockPulseState);
+		
+		waitTick();
 		waitTick();
 		
 	}
@@ -316,6 +316,7 @@ public class IOSystem {
 	protected byte[] readBytes() {
 		
 		setLow();
+		clockPulseState = false;
 		
 		byte length = -1;
 		byte[] data = null;
@@ -324,9 +325,8 @@ public class IOSystem {
 		byteParser = 0;
 		while (byteParser / 8 < length || length == -1) {
 			
-			outputSync.setState(clockPulseState);
-			
 			clockPulseState = !clockPulseState;
+			outputSync.setState(clockPulseState);
 			
 			if (!clockPulseState) {
 				
@@ -344,11 +344,12 @@ public class IOSystem {
 						length = currentByte;
 						byteParser = 0;
 						data = new byte[length];
-					} else if (byteParser / 8 < data.length){
-						data[byteParser / 8] = currentByte;
-						System.out.println("recive " + currentByte);
+					} else if (byteParser / 8 <= data.length){
+						data[(byteParser / 8) - 1] = currentByte;
 					}
 					currentByte = 0;
+					
+					waitTick();
 					
 				}
 				
