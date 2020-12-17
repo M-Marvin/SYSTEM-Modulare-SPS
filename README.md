@@ -3,6 +3,8 @@ Eine Modulares SPS System aus einem Raspberry Pi und ATmega328 Microcontrolern
 
 Das Projekt ist noch nicht fertig, aber auf einem Steckbrett hat es schon funktioniert!
 
+WISCHITG: Datei wird auf der GitHub Webseite verbuggt angezeigt, besser runterladen und mit standart Texteditor öffnen!
+
 -----------------------------------------------------------------------------------------------------
 
 Die Modulare SPS besteht aus einem Raspberry Pi. der über ein Adaptermodul und
