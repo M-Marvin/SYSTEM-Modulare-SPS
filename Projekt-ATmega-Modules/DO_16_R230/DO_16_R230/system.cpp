@@ -56,8 +56,8 @@ class System {
 							
 						} else if (dataLength == 3) {
 						
-						PORTD = data[0];
-						PORTB = data[1];
+						PORTD = data[1];
+						PORTB = data[0];
 						
 					}
 					

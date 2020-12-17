@@ -3,13 +3,13 @@ out.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  0000077c  2**0
+  0 .data         00000000  00800100  00800100  0000077e  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000728  00000000  00000000  00000054  2**1
+  1 .text         0000072a  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  0000077c  2**0
+  2 .comment      00000030  00000000  00000000  0000077e  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000007ac  2**2
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000007b0  2**2
                   CONTENTS, READONLY
   4 .debug_aranges 00000068  00000000  00000000  000007f0  2**3
                   CONTENTS, READONLY, DEBUGGING
@@ -65,8 +65,8 @@ Disassembly of section .text:
   6e:	d8 e0       	ldi	r29, 0x08	; 8
   70:	de bf       	out	0x3e, r29	; 62
   72:	cd bf       	out	0x3d, r28	; 61
-  74:	0e 94 6a 03 	call	0x6d4	; 0x6d4 <main>
-  78:	0c 94 92 03 	jmp	0x724	; 0x724 <_exit>
+  74:	0e 94 6b 03 	call	0x6d6	; 0x6d6 <main>
+  78:	0c 94 93 03 	jmp	0x726	; 0x726 <_exit>
 
 0000007c <__bad_interrupt>:
   7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -207,7 +207,7 @@ Disassembly of section .text:
 		uint8_t data = eeprom_read_byte((uint8_t *) 0x0);
  124:	80 e0       	ldi	r24, 0x00	; 0
  126:	90 e0       	ldi	r25, 0x00	; 0
- 128:	0e 94 78 03 	call	0x6f0	; 0x6f0 <eeprom_read_byte>
+ 128:	0e 94 79 03 	call	0x6f2	; 0x6f2 <eeprom_read_byte>
 		address = (int8_t) data;
  12c:	f8 01       	movw	r30, r16
  12e:	80 83       	st	Z, r24
@@ -272,7 +272,7 @@ Disassembly of section .text:
 			if (dataLength > 0) {
  170:	18 16       	cp	r1, r24
  172:	0c f0       	brlt	.+2      	; 0x176 <_ZN6System5startEv+0xf6>
- 174:	ec c0       	rjmp	.+472    	; 0x34e <_ZN6System5startEv+0x2ce>
+ 174:	ed c0       	rjmp	.+474    	; 0x350 <_ZN6System5startEv+0x2d0>
 		}
 	}
 	
@@ -292,7 +292,7 @@ Disassembly of section .text:
  182:	d8 01       	movw	r26, r16
  184:	2c 91       	ld	r18, X
  186:	92 13       	cpse	r25, r18
- 188:	72 c0       	rjmp	.+228    	; 0x26e <_ZN6System5startEv+0x1ee>
+ 188:	73 c0       	rjmp	.+230    	; 0x270 <_ZN6System5startEv+0x1f0>
  18a:	11 96       	adiw	r26, 0x01	; 1
  18c:	2d 91       	ld	r18, X+
  18e:	3c 91       	ld	r19, X
@@ -300,7 +300,7 @@ Disassembly of section .text:
  192:	28 38       	cpi	r18, 0x88	; 136
  194:	33 41       	sbci	r19, 0x13	; 19
  196:	09 f0       	breq	.+2      	; 0x19a <_ZN6System5startEv+0x11a>
- 198:	6a c0       	rjmp	.+212    	; 0x26e <_ZN6System5startEv+0x1ee>
+ 198:	6b c0       	rjmp	.+214    	; 0x270 <_ZN6System5startEv+0x1f0>
 					
 					if (dataLength == 1) {
  19a:	81 30       	cpi	r24, 0x01	; 1
@@ -423,14 +423,14 @@ Disassembly of section .text:
  24a:	80 e0       	ldi	r24, 0x00	; 0
  24c:	88 23       	and	r24, r24
  24e:	09 f4       	brne	.+2      	; 0x252 <_ZN6System5startEv+0x1d2>
- 250:	7e c0       	rjmp	.+252    	; 0x34e <_ZN6System5startEv+0x2ce>
+ 250:	7f c0       	rjmp	.+254    	; 0x350 <_ZN6System5startEv+0x2d0>
  252:	81 e0       	ldi	r24, 0x01	; 1
  254:	cb 5f       	subi	r28, 0xFB	; 251
  256:	de 4f       	sbci	r29, 0xFE	; 254
  258:	88 83       	st	Y, r24
  25a:	c5 50       	subi	r28, 0x05	; 5
  25c:	d1 40       	sbci	r29, 0x01	; 1
- 25e:	77 c0       	rjmp	.+238    	; 0x34e <_ZN6System5startEv+0x2ce>
+ 25e:	78 c0       	rjmp	.+240    	; 0x350 <_ZN6System5startEv+0x2d0>
 						
 							com.setSendData(portStates, 2);
 							com.startSending();
@@ -438,840 +438,841 @@ Disassembly of section .text:
 						} else if (dataLength == 3) {
  260:	83 30       	cpi	r24, 0x03	; 3
  262:	09 f0       	breq	.+2      	; 0x266 <_ZN6System5startEv+0x1e6>
- 264:	74 c0       	rjmp	.+232    	; 0x34e <_ZN6System5startEv+0x2ce>
+ 264:	75 c0       	rjmp	.+234    	; 0x350 <_ZN6System5startEv+0x2d0>
 						
-						PORTD = data[0];
- 266:	9b b9       	out	0x0b, r25	; 11
-						PORTB = data[1];
- 268:	8b 81       	ldd	r24, Y+3	; 0x03
- 26a:	85 b9       	out	0x05, r24	; 5
- 26c:	70 c0       	rjmp	.+224    	; 0x34e <_ZN6System5startEv+0x2ce>
+						PORTD = data[1];
+ 266:	8b 81       	ldd	r24, Y+3	; 0x03
+ 268:	8b b9       	out	0x0b, r24	; 11
+						PORTB = data[0];
+ 26a:	8a 81       	ldd	r24, Y+2	; 0x02
+ 26c:	85 b9       	out	0x05, r24	; 5
+ 26e:	70 c0       	rjmp	.+224    	; 0x350 <_ZN6System5startEv+0x2d0>
 						
 					}
 					
 				} else if (data[0] == MASTER_ADRESS && bootTimer < BOOT_LOCK_TIME) {
- 26e:	91 11       	cpse	r25, r1
- 270:	6e c0       	rjmp	.+220    	; 0x34e <_ZN6System5startEv+0x2ce>
- 272:	d8 01       	movw	r26, r16
- 274:	11 96       	adiw	r26, 0x01	; 1
- 276:	2d 91       	ld	r18, X+
- 278:	3c 91       	ld	r19, X
- 27a:	12 97       	sbiw	r26, 0x02	; 2
- 27c:	28 38       	cpi	r18, 0x88	; 136
- 27e:	33 41       	sbci	r19, 0x13	; 19
- 280:	0c f0       	brlt	.+2      	; 0x284 <_ZN6System5startEv+0x204>
- 282:	65 c0       	rjmp	.+202    	; 0x34e <_ZN6System5startEv+0x2ce>
+ 270:	91 11       	cpse	r25, r1
+ 272:	6e c0       	rjmp	.+220    	; 0x350 <_ZN6System5startEv+0x2d0>
+ 274:	d8 01       	movw	r26, r16
+ 276:	11 96       	adiw	r26, 0x01	; 1
+ 278:	2d 91       	ld	r18, X+
+ 27a:	3c 91       	ld	r19, X
+ 27c:	12 97       	sbiw	r26, 0x02	; 2
+ 27e:	28 38       	cpi	r18, 0x88	; 136
+ 280:	33 41       	sbci	r19, 0x13	; 19
+ 282:	0c f0       	brlt	.+2      	; 0x286 <_ZN6System5startEv+0x206>
+ 284:	65 c0       	rjmp	.+202    	; 0x350 <_ZN6System5startEv+0x2d0>
 					
 					if (dataLength == 2) {
- 284:	82 30       	cpi	r24, 0x02	; 2
- 286:	09 f0       	breq	.+2      	; 0x28a <_ZN6System5startEv+0x20a>
- 288:	62 c0       	rjmp	.+196    	; 0x34e <_ZN6System5startEv+0x2ce>
+ 286:	82 30       	cpi	r24, 0x02	; 2
+ 288:	09 f0       	breq	.+2      	; 0x28c <_ZN6System5startEv+0x20c>
+ 28a:	62 c0       	rjmp	.+196    	; 0x350 <_ZN6System5startEv+0x2d0>
 						
 						setAdress(data[1]);
- 28a:	6b 81       	ldd	r22, Y+3	; 0x03
+ 28c:	6b 81       	ldd	r22, Y+3	; 0x03
 		
 	}
 	
 	public: void setAdress(int8_t adress) {
 		uint8_t data = (uint8_t) adress;
 		eeprom_update_byte((uint8_t *) 0x0, data);
- 28c:	80 e0       	ldi	r24, 0x00	; 0
- 28e:	90 e0       	ldi	r25, 0x00	; 0
- 290:	0e 94 80 03 	call	0x700	; 0x700 <eeprom_update_byte>
+ 28e:	80 e0       	ldi	r24, 0x00	; 0
+ 290:	90 e0       	ldi	r25, 0x00	; 0
+ 292:	0e 94 81 03 	call	0x702	; 0x702 <eeprom_update_byte>
 		loadAdress();
 	}
 	
 	public: void loadAdress() {
 		uint8_t data = eeprom_read_byte((uint8_t *) 0x0);
- 294:	80 e0       	ldi	r24, 0x00	; 0
- 296:	90 e0       	ldi	r25, 0x00	; 0
- 298:	0e 94 78 03 	call	0x6f0	; 0x6f0 <eeprom_read_byte>
+ 296:	80 e0       	ldi	r24, 0x00	; 0
+ 298:	90 e0       	ldi	r25, 0x00	; 0
+ 29a:	0e 94 79 03 	call	0x6f2	; 0x6f2 <eeprom_read_byte>
 		address = (int8_t) data;
- 29c:	f8 01       	movw	r30, r16
- 29e:	80 83       	st	Z, r24
+ 29e:	f8 01       	movw	r30, r16
+ 2a0:	80 83       	st	Z, r24
 				} else if (data[0] == MASTER_ADRESS && bootTimer < BOOT_LOCK_TIME) {
 					
 					if (dataLength == 2) {
 						
 						setAdress(data[1]);
 						int8_t confirmMsg[2] = {0};
- 2a0:	c3 5f       	subi	r28, 0xF3	; 243
- 2a2:	dd 4f       	sbci	r29, 0xFD	; 253
- 2a4:	19 82       	std	Y+1, r1	; 0x01
- 2a6:	18 82       	st	Y, r1
- 2a8:	cd 50       	subi	r28, 0x0D	; 13
- 2aa:	d2 40       	sbci	r29, 0x02	; 2
+ 2a2:	c3 5f       	subi	r28, 0xF3	; 243
+ 2a4:	dd 4f       	sbci	r29, 0xFD	; 253
+ 2a6:	19 82       	std	Y+1, r1	; 0x01
+ 2a8:	18 82       	st	Y, r1
+ 2aa:	cd 50       	subi	r28, 0x0D	; 13
+ 2ac:	d2 40       	sbci	r29, 0x02	; 2
 						confirmMsg[0] = MASTER_ADRESS;
 						confirmMsg[1] = address;
- 2ac:	c2 5f       	subi	r28, 0xF2	; 242
- 2ae:	dd 4f       	sbci	r29, 0xFD	; 253
- 2b0:	88 83       	st	Y, r24
- 2b2:	ce 50       	subi	r28, 0x0E	; 14
- 2b4:	d2 40       	sbci	r29, 0x02	; 2
+ 2ae:	c2 5f       	subi	r28, 0xF2	; 242
+ 2b0:	dd 4f       	sbci	r29, 0xFD	; 253
+ 2b2:	88 83       	st	Y, r24
+ 2b4:	ce 50       	subi	r28, 0x0E	; 14
+ 2b6:	d2 40       	sbci	r29, 0x02	; 2
 		return data;
 	}
 
 	public: void setSendData(int8_t* data, int8_t length)
 	{
 		sendData[length + 1] = {0};
- 2b6:	c6 5f       	subi	r28, 0xF6	; 246
- 2b8:	de 4f       	sbci	r29, 0xFE	; 254
- 2ba:	18 82       	st	Y, r1
- 2bc:	ca 50       	subi	r28, 0x0A	; 10
- 2be:	d1 40       	sbci	r29, 0x01	; 1
+ 2b8:	c6 5f       	subi	r28, 0xF6	; 246
+ 2ba:	de 4f       	sbci	r29, 0xFE	; 254
+ 2bc:	18 82       	st	Y, r1
+ 2be:	ca 50       	subi	r28, 0x0A	; 10
+ 2c0:	d1 40       	sbci	r29, 0x01	; 1
 		sendData[0] = length;
- 2c0:	82 e0       	ldi	r24, 0x02	; 2
- 2c2:	c9 5f       	subi	r28, 0xF9	; 249
- 2c4:	de 4f       	sbci	r29, 0xFE	; 254
- 2c6:	88 83       	st	Y, r24
- 2c8:	c7 50       	subi	r28, 0x07	; 7
- 2ca:	d1 40       	sbci	r29, 0x01	; 1
+ 2c2:	82 e0       	ldi	r24, 0x02	; 2
+ 2c4:	c9 5f       	subi	r28, 0xF9	; 249
+ 2c6:	de 4f       	sbci	r29, 0xFE	; 254
+ 2c8:	88 83       	st	Y, r24
+ 2ca:	c7 50       	subi	r28, 0x07	; 7
+ 2cc:	d1 40       	sbci	r29, 0x01	; 1
 		for (int8_t i = 0; i < length; i++) sendData[i + 1] = data[i];
- 2cc:	80 e0       	ldi	r24, 0x00	; 0
- 2ce:	82 30       	cpi	r24, 0x02	; 2
- 2d0:	b4 f4       	brge	.+44     	; 0x2fe <_ZN6System5startEv+0x27e>
- 2d2:	28 2f       	mov	r18, r24
- 2d4:	08 2e       	mov	r0, r24
- 2d6:	00 0c       	add	r0, r0
- 2d8:	33 0b       	sbc	r19, r19
- 2da:	f9 01       	movw	r30, r18
- 2dc:	31 96       	adiw	r30, 0x01	; 1
- 2de:	ad e0       	ldi	r26, 0x0D	; 13
- 2e0:	b2 e0       	ldi	r27, 0x02	; 2
- 2e2:	ac 0f       	add	r26, r28
- 2e4:	bd 1f       	adc	r27, r29
- 2e6:	a2 0f       	add	r26, r18
- 2e8:	b3 1f       	adc	r27, r19
- 2ea:	9c 91       	ld	r25, X
- 2ec:	27 e0       	ldi	r18, 0x07	; 7
- 2ee:	31 e0       	ldi	r19, 0x01	; 1
- 2f0:	2c 0f       	add	r18, r28
- 2f2:	3d 1f       	adc	r19, r29
- 2f4:	e2 0f       	add	r30, r18
- 2f6:	f3 1f       	adc	r31, r19
- 2f8:	90 83       	st	Z, r25
- 2fa:	8f 5f       	subi	r24, 0xFF	; 255
- 2fc:	e8 cf       	rjmp	.-48     	; 0x2ce <_ZN6System5startEv+0x24e>
+ 2ce:	80 e0       	ldi	r24, 0x00	; 0
+ 2d0:	82 30       	cpi	r24, 0x02	; 2
+ 2d2:	b4 f4       	brge	.+44     	; 0x300 <_ZN6System5startEv+0x280>
+ 2d4:	28 2f       	mov	r18, r24
+ 2d6:	08 2e       	mov	r0, r24
+ 2d8:	00 0c       	add	r0, r0
+ 2da:	33 0b       	sbc	r19, r19
+ 2dc:	f9 01       	movw	r30, r18
+ 2de:	31 96       	adiw	r30, 0x01	; 1
+ 2e0:	ad e0       	ldi	r26, 0x0D	; 13
+ 2e2:	b2 e0       	ldi	r27, 0x02	; 2
+ 2e4:	ac 0f       	add	r26, r28
+ 2e6:	bd 1f       	adc	r27, r29
+ 2e8:	a2 0f       	add	r26, r18
+ 2ea:	b3 1f       	adc	r27, r19
+ 2ec:	9c 91       	ld	r25, X
+ 2ee:	27 e0       	ldi	r18, 0x07	; 7
+ 2f0:	31 e0       	ldi	r19, 0x01	; 1
+ 2f2:	2c 0f       	add	r18, r28
+ 2f4:	3d 1f       	adc	r19, r29
+ 2f6:	e2 0f       	add	r30, r18
+ 2f8:	f3 1f       	adc	r31, r19
+ 2fa:	90 83       	st	Z, r25
+ 2fc:	8f 5f       	subi	r24, 0xFF	; 255
+ 2fe:	e8 cf       	rjmp	.-48     	; 0x2d0 <_ZN6System5startEv+0x250>
 		remainingSendPackets = length;
- 2fe:	82 e0       	ldi	r24, 0x02	; 2
- 300:	c9 5f       	subi	r28, 0xF9	; 249
- 302:	dd 4f       	sbci	r29, 0xFD	; 253
- 304:	88 83       	st	Y, r24
- 306:	c7 50       	subi	r28, 0x07	; 7
- 308:	d2 40       	sbci	r29, 0x02	; 2
+ 300:	82 e0       	ldi	r24, 0x02	; 2
+ 302:	c9 5f       	subi	r28, 0xF9	; 249
+ 304:	dd 4f       	sbci	r29, 0xFD	; 253
+ 306:	88 83       	st	Y, r24
+ 308:	c7 50       	subi	r28, 0x07	; 7
+ 30a:	d2 40       	sbci	r29, 0x02	; 2
 		sendDataLength = length;
- 30a:	ca 5f       	subi	r28, 0xFA	; 250
- 30c:	dd 4f       	sbci	r29, 0xFD	; 253
- 30e:	88 83       	st	Y, r24
- 310:	c6 50       	subi	r28, 0x06	; 6
- 312:	d2 40       	sbci	r29, 0x02	; 2
+ 30c:	ca 5f       	subi	r28, 0xFA	; 250
+ 30e:	dd 4f       	sbci	r29, 0xFD	; 253
+ 310:	88 83       	st	Y, r24
+ 312:	c6 50       	subi	r28, 0x06	; 6
+ 314:	d2 40       	sbci	r29, 0x02	; 2
 		byteBuffer2 = 0;
- 314:	c8 5f       	subi	r28, 0xF8	; 248
- 316:	dd 4f       	sbci	r29, 0xFD	; 253
- 318:	18 82       	st	Y, r1
- 31a:	c8 50       	subi	r28, 0x08	; 8
- 31c:	d2 40       	sbci	r29, 0x02	; 2
+ 316:	c8 5f       	subi	r28, 0xF8	; 248
+ 318:	dd 4f       	sbci	r29, 0xFD	; 253
+ 31a:	18 82       	st	Y, r1
+ 31c:	c8 50       	subi	r28, 0x08	; 8
+ 31e:	d2 40       	sbci	r29, 0x02	; 2
 		byteBufferPointer2 = 8;
- 31e:	88 e0       	ldi	r24, 0x08	; 8
- 320:	c7 5f       	subi	r28, 0xF7	; 247
- 322:	dd 4f       	sbci	r29, 0xFD	; 253
- 324:	88 83       	st	Y, r24
- 326:	c9 50       	subi	r28, 0x09	; 9
- 328:	d2 40       	sbci	r29, 0x02	; 2
+ 320:	88 e0       	ldi	r24, 0x08	; 8
+ 322:	c7 5f       	subi	r28, 0xF7	; 247
+ 324:	dd 4f       	sbci	r29, 0xFD	; 253
+ 326:	88 83       	st	Y, r24
+ 328:	c9 50       	subi	r28, 0x09	; 9
+ 32a:	d2 40       	sbci	r29, 0x02	; 2
 	public: bool isDataSend() {
 		return sendDataLength == 0 && !isSending();
 	}
 
 	public: bool isSending() {
 		return remainingSendPackets >= 0 && doSend;
- 32a:	ca 5f       	subi	r28, 0xFA	; 250
- 32c:	de 4f       	sbci	r29, 0xFE	; 254
- 32e:	88 81       	ld	r24, Y
- 330:	c6 50       	subi	r28, 0x06	; 6
- 332:	d1 40       	sbci	r29, 0x01	; 1
+ 32c:	ca 5f       	subi	r28, 0xFA	; 250
+ 32e:	de 4f       	sbci	r29, 0xFE	; 254
+ 330:	88 81       	ld	r24, Y
+ 332:	c6 50       	subi	r28, 0x06	; 6
+ 334:	d1 40       	sbci	r29, 0x01	; 1
 		
 	}
 	
 	public: void startSending() {
 		
 		if (remainingSendPackets > 0 && !isSending()) requestSend = true;
- 334:	81 11       	cpse	r24, r1
- 336:	02 c0       	rjmp	.+4      	; 0x33c <_ZN6System5startEv+0x2bc>
- 338:	81 e0       	ldi	r24, 0x01	; 1
- 33a:	01 c0       	rjmp	.+2      	; 0x33e <_ZN6System5startEv+0x2be>
- 33c:	80 e0       	ldi	r24, 0x00	; 0
- 33e:	88 23       	and	r24, r24
- 340:	31 f0       	breq	.+12     	; 0x34e <_ZN6System5startEv+0x2ce>
- 342:	81 e0       	ldi	r24, 0x01	; 1
- 344:	cb 5f       	subi	r28, 0xFB	; 251
- 346:	de 4f       	sbci	r29, 0xFE	; 254
- 348:	88 83       	st	Y, r24
- 34a:	c5 50       	subi	r28, 0x05	; 5
- 34c:	d1 40       	sbci	r29, 0x01	; 1
+ 336:	81 11       	cpse	r24, r1
+ 338:	02 c0       	rjmp	.+4      	; 0x33e <_ZN6System5startEv+0x2be>
+ 33a:	81 e0       	ldi	r24, 0x01	; 1
+ 33c:	01 c0       	rjmp	.+2      	; 0x340 <_ZN6System5startEv+0x2c0>
+ 33e:	80 e0       	ldi	r24, 0x00	; 0
+ 340:	88 23       	and	r24, r24
+ 342:	31 f0       	breq	.+12     	; 0x350 <_ZN6System5startEv+0x2d0>
+ 344:	81 e0       	ldi	r24, 0x01	; 1
+ 346:	cb 5f       	subi	r28, 0xFB	; 251
+ 348:	de 4f       	sbci	r29, 0xFE	; 254
+ 34a:	88 83       	st	Y, r24
+ 34c:	c5 50       	subi	r28, 0x05	; 5
+ 34e:	d1 40       	sbci	r29, 0x01	; 1
 					
 				}
 				
 			}
 			
 			if (bootTimer < BOOT_LOCK_TIME) bootTimer++;
- 34e:	d8 01       	movw	r26, r16
- 350:	11 96       	adiw	r26, 0x01	; 1
- 352:	8d 91       	ld	r24, X+
- 354:	9c 91       	ld	r25, X
- 356:	12 97       	sbiw	r26, 0x02	; 2
- 358:	88 38       	cpi	r24, 0x88	; 136
- 35a:	b3 e1       	ldi	r27, 0x13	; 19
- 35c:	9b 07       	cpc	r25, r27
- 35e:	24 f4       	brge	.+8      	; 0x368 <_ZN6System5startEv+0x2e8>
- 360:	01 96       	adiw	r24, 0x01	; 1
- 362:	f8 01       	movw	r30, r16
- 364:	92 83       	std	Z+2, r25	; 0x02
- 366:	81 83       	std	Z+1, r24	; 0x01
+ 350:	d8 01       	movw	r26, r16
+ 352:	11 96       	adiw	r26, 0x01	; 1
+ 354:	8d 91       	ld	r24, X+
+ 356:	9c 91       	ld	r25, X
+ 358:	12 97       	sbiw	r26, 0x02	; 2
+ 35a:	88 38       	cpi	r24, 0x88	; 136
+ 35c:	b3 e1       	ldi	r27, 0x13	; 19
+ 35e:	9b 07       	cpc	r25, r27
+ 360:	24 f4       	brge	.+8      	; 0x36a <_ZN6System5startEv+0x2ea>
+ 362:	01 96       	adiw	r24, 0x01	; 1
+ 364:	f8 01       	movw	r30, r16
+ 366:	92 83       	std	Z+2, r25	; 0x02
+ 368:	81 83       	std	Z+1, r24	; 0x01
 		
 	}
 
 	public: void update() {
 		
 		bool enable = (PINC & PINC_ENABLE) > 0;
- 368:	86 b1       	in	r24, 0x06	; 6
- 36a:	80 72       	andi	r24, 0x20	; 32
- 36c:	90 e0       	ldi	r25, 0x00	; 0
+ 36a:	86 b1       	in	r24, 0x06	; 6
+ 36c:	80 72       	andi	r24, 0x20	; 32
+ 36e:	90 e0       	ldi	r25, 0x00	; 0
 		
 		// Prevent listening to half message (on startup)
 		if (!enableListening && !enable) enableListening = true;
- 36e:	c4 5f       	subi	r28, 0xF4	; 244
- 370:	dd 4f       	sbci	r29, 0xFD	; 253
- 372:	28 81       	ld	r18, Y
- 374:	cc 50       	subi	r28, 0x0C	; 12
- 376:	d2 40       	sbci	r29, 0x02	; 2
- 378:	21 11       	cpse	r18, r1
- 37a:	09 c0       	rjmp	.+18     	; 0x38e <_ZN6System5startEv+0x30e>
- 37c:	18 16       	cp	r1, r24
- 37e:	19 06       	cpc	r1, r25
- 380:	34 f0       	brlt	.+12     	; 0x38e <_ZN6System5startEv+0x30e>
- 382:	21 e0       	ldi	r18, 0x01	; 1
- 384:	c4 5f       	subi	r28, 0xF4	; 244
- 386:	dd 4f       	sbci	r29, 0xFD	; 253
- 388:	28 83       	st	Y, r18
- 38a:	cc 50       	subi	r28, 0x0C	; 12
- 38c:	d2 40       	sbci	r29, 0x02	; 2
+ 370:	c4 5f       	subi	r28, 0xF4	; 244
+ 372:	dd 4f       	sbci	r29, 0xFD	; 253
+ 374:	28 81       	ld	r18, Y
+ 376:	cc 50       	subi	r28, 0x0C	; 12
+ 378:	d2 40       	sbci	r29, 0x02	; 2
+ 37a:	21 11       	cpse	r18, r1
+ 37c:	09 c0       	rjmp	.+18     	; 0x390 <_ZN6System5startEv+0x310>
+ 37e:	18 16       	cp	r1, r24
+ 380:	19 06       	cpc	r1, r25
+ 382:	34 f0       	brlt	.+12     	; 0x390 <_ZN6System5startEv+0x310>
+ 384:	21 e0       	ldi	r18, 0x01	; 1
+ 386:	c4 5f       	subi	r28, 0xF4	; 244
+ 388:	dd 4f       	sbci	r29, 0xFD	; 253
+ 38a:	28 83       	st	Y, r18
+ 38c:	cc 50       	subi	r28, 0x0C	; 12
+ 38e:	d2 40       	sbci	r29, 0x02	; 2
 		
 		if (enable && enableListening)  {
- 38e:	18 16       	cp	r1, r24
- 390:	19 06       	cpc	r1, r25
- 392:	0c f0       	brlt	.+2      	; 0x396 <_ZN6System5startEv+0x316>
- 394:	cd ce       	rjmp	.-614    	; 0x130 <_ZN6System5startEv+0xb0>
- 396:	c4 5f       	subi	r28, 0xF4	; 244
- 398:	dd 4f       	sbci	r29, 0xFD	; 253
- 39a:	28 81       	ld	r18, Y
- 39c:	cc 50       	subi	r28, 0x0C	; 12
- 39e:	d2 40       	sbci	r29, 0x02	; 2
- 3a0:	22 23       	and	r18, r18
- 3a2:	09 f4       	brne	.+2      	; 0x3a6 <_ZN6System5startEv+0x326>
- 3a4:	c5 ce       	rjmp	.-630    	; 0x130 <_ZN6System5startEv+0xb0>
+ 390:	18 16       	cp	r1, r24
+ 392:	19 06       	cpc	r1, r25
+ 394:	0c f0       	brlt	.+2      	; 0x398 <_ZN6System5startEv+0x318>
+ 396:	cc ce       	rjmp	.-616    	; 0x130 <_ZN6System5startEv+0xb0>
+ 398:	c4 5f       	subi	r28, 0xF4	; 244
+ 39a:	dd 4f       	sbci	r29, 0xFD	; 253
+ 39c:	28 81       	ld	r18, Y
+ 39e:	cc 50       	subi	r28, 0x0C	; 12
+ 3a0:	d2 40       	sbci	r29, 0x02	; 2
+ 3a2:	22 23       	and	r18, r18
+ 3a4:	09 f4       	brne	.+2      	; 0x3a8 <_ZN6System5startEv+0x328>
+ 3a6:	c4 ce       	rjmp	.-632    	; 0x130 <_ZN6System5startEv+0xb0>
 			
 			bool clckHigh = (PINC & PINC_CLCK) > 0;
- 3a6:	86 b1       	in	r24, 0x06	; 6
- 3a8:	80 71       	andi	r24, 0x10	; 16
- 3aa:	90 e0       	ldi	r25, 0x00	; 0
+ 3a8:	86 b1       	in	r24, 0x06	; 6
+ 3aa:	80 71       	andi	r24, 0x10	; 16
+ 3ac:	90 e0       	ldi	r25, 0x00	; 0
 				handleTimer = 0;
 			} else if (hasHandledClckPulse) {
 				handleTimer++;
 			}
 			
 			if (clckHigh && !hasHandledClckPulse) {
- 3ac:	18 16       	cp	r1, r24
- 3ae:	19 06       	cpc	r1, r25
- 3b0:	0c f0       	brlt	.+2      	; 0x3b4 <_ZN6System5startEv+0x334>
- 3b2:	69 c1       	rjmp	.+722    	; 0x686 <__EEPROM_REGION_LENGTH__+0x286>
- 3b4:	c6 5f       	subi	r28, 0xF6	; 246
- 3b6:	dd 4f       	sbci	r29, 0xFD	; 253
- 3b8:	38 81       	ld	r19, Y
- 3ba:	ca 50       	subi	r28, 0x0A	; 10
- 3bc:	d2 40       	sbci	r29, 0x02	; 2
- 3be:	31 11       	cpse	r19, r1
- 3c0:	62 c1       	rjmp	.+708    	; 0x686 <__EEPROM_REGION_LENGTH__+0x286>
+ 3ae:	18 16       	cp	r1, r24
+ 3b0:	19 06       	cpc	r1, r25
+ 3b2:	0c f0       	brlt	.+2      	; 0x3b6 <_ZN6System5startEv+0x336>
+ 3b4:	69 c1       	rjmp	.+722    	; 0x688 <__EEPROM_REGION_LENGTH__+0x288>
+ 3b6:	c6 5f       	subi	r28, 0xF6	; 246
+ 3b8:	dd 4f       	sbci	r29, 0xFD	; 253
+ 3ba:	38 81       	ld	r19, Y
+ 3bc:	ca 50       	subi	r28, 0x0A	; 10
+ 3be:	d2 40       	sbci	r29, 0x02	; 2
+ 3c0:	31 11       	cpse	r19, r1
+ 3c2:	62 c1       	rjmp	.+708    	; 0x688 <__EEPROM_REGION_LENGTH__+0x288>
 				
 				hasHandledClckPulse = true;
- 3c2:	81 e0       	ldi	r24, 0x01	; 1
- 3c4:	c6 5f       	subi	r28, 0xF6	; 246
- 3c6:	dd 4f       	sbci	r29, 0xFD	; 253
- 3c8:	88 83       	st	Y, r24
- 3ca:	ca 50       	subi	r28, 0x0A	; 10
- 3cc:	d2 40       	sbci	r29, 0x02	; 2
+ 3c4:	81 e0       	ldi	r24, 0x01	; 1
+ 3c6:	c6 5f       	subi	r28, 0xF6	; 246
+ 3c8:	dd 4f       	sbci	r29, 0xFD	; 253
+ 3ca:	88 83       	st	Y, r24
+ 3cc:	ca 50       	subi	r28, 0x0A	; 10
+ 3ce:	d2 40       	sbci	r29, 0x02	; 2
 	public: bool isDataSend() {
 		return sendDataLength == 0 && !isSending();
 	}
 
 	public: bool isSending() {
 		return remainingSendPackets >= 0 && doSend;
- 3ce:	c9 5f       	subi	r28, 0xF9	; 249
- 3d0:	dd 4f       	sbci	r29, 0xFD	; 253
- 3d2:	78 81       	ld	r23, Y
- 3d4:	c7 50       	subi	r28, 0x07	; 7
- 3d6:	d2 40       	sbci	r29, 0x02	; 2
- 3d8:	77 23       	and	r23, r23
- 3da:	4c f0       	brlt	.+18     	; 0x3ee <_ZN6System5startEv+0x36e>
- 3dc:	ca 5f       	subi	r28, 0xFA	; 250
- 3de:	de 4f       	sbci	r29, 0xFE	; 254
- 3e0:	68 81       	ld	r22, Y
- 3e2:	c6 50       	subi	r28, 0x06	; 6
- 3e4:	d1 40       	sbci	r29, 0x01	; 1
- 3e6:	61 11       	cpse	r22, r1
- 3e8:	03 c0       	rjmp	.+6      	; 0x3f0 <_ZN6System5startEv+0x370>
- 3ea:	63 2f       	mov	r22, r19
- 3ec:	01 c0       	rjmp	.+2      	; 0x3f0 <_ZN6System5startEv+0x370>
- 3ee:	63 2f       	mov	r22, r19
+ 3d0:	c9 5f       	subi	r28, 0xF9	; 249
+ 3d2:	dd 4f       	sbci	r29, 0xFD	; 253
+ 3d4:	78 81       	ld	r23, Y
+ 3d6:	c7 50       	subi	r28, 0x07	; 7
+ 3d8:	d2 40       	sbci	r29, 0x02	; 2
+ 3da:	77 23       	and	r23, r23
+ 3dc:	4c f0       	brlt	.+18     	; 0x3f0 <_ZN6System5startEv+0x370>
+ 3de:	ca 5f       	subi	r28, 0xFA	; 250
+ 3e0:	de 4f       	sbci	r29, 0xFE	; 254
+ 3e2:	68 81       	ld	r22, Y
+ 3e4:	c6 50       	subi	r28, 0x06	; 6
+ 3e6:	d1 40       	sbci	r29, 0x01	; 1
+ 3e8:	61 11       	cpse	r22, r1
+ 3ea:	03 c0       	rjmp	.+6      	; 0x3f2 <_ZN6System5startEv+0x372>
+ 3ec:	63 2f       	mov	r22, r19
+ 3ee:	01 c0       	rjmp	.+2      	; 0x3f2 <_ZN6System5startEv+0x372>
+ 3f0:	63 2f       	mov	r22, r19
 			
 			if (clckHigh && !hasHandledClckPulse) {
 				
 				hasHandledClckPulse = true;
 				
 				if (!isSending()) {
- 3f0:	61 11       	cpse	r22, r1
- 3f2:	a7 c0       	rjmp	.+334    	; 0x542 <__EEPROM_REGION_LENGTH__+0x142>
+ 3f2:	61 11       	cpse	r22, r1
+ 3f4:	a7 c0       	rjmp	.+334    	; 0x544 <__EEPROM_REGION_LENGTH__+0x144>
 					
 					// get recived Value
 					bool recivedBit1 = (PINC & PINC_COM_1) > 0;
- 3f4:	41 e0       	ldi	r20, 0x01	; 1
- 3f6:	32 9b       	sbis	0x06, 2	; 6
- 3f8:	40 e0       	ldi	r20, 0x00	; 0
+ 3f6:	41 e0       	ldi	r20, 0x01	; 1
+ 3f8:	32 9b       	sbis	0x06, 2	; 6
+ 3fa:	40 e0       	ldi	r20, 0x00	; 0
 					bool recivedBit2 = (PINC & PINC_COM_2) > 0;
- 3fa:	91 e0       	ldi	r25, 0x01	; 1
- 3fc:	33 9b       	sbis	0x06, 3	; 6
- 3fe:	90 e0       	ldi	r25, 0x00	; 0
+ 3fc:	91 e0       	ldi	r25, 0x01	; 1
+ 3fe:	33 9b       	sbis	0x06, 3	; 6
+ 400:	90 e0       	ldi	r25, 0x00	; 0
 					byteBuffer |= (recivedBit1 << (byteBufferPointer + 0));
- 400:	cc 5f       	subi	r28, 0xFC	; 252
- 402:	de 4f       	sbci	r29, 0xFE	; 254
- 404:	38 81       	ld	r19, Y
- 406:	c4 50       	subi	r28, 0x04	; 4
- 408:	d1 40       	sbci	r29, 0x01	; 1
- 40a:	e3 2f       	mov	r30, r19
- 40c:	03 2e       	mov	r0, r19
- 40e:	00 0c       	add	r0, r0
- 410:	ff 0b       	sbc	r31, r31
- 412:	50 e0       	ldi	r21, 0x00	; 0
- 414:	03 2e       	mov	r0, r19
- 416:	02 c0       	rjmp	.+4      	; 0x41c <__EEPROM_REGION_LENGTH__+0x1c>
- 418:	44 0f       	add	r20, r20
- 41a:	55 1f       	adc	r21, r21
- 41c:	0a 94       	dec	r0
- 41e:	e2 f7       	brpl	.-8      	; 0x418 <__EEPROM_REGION_LENGTH__+0x18>
- 420:	cd 5f       	subi	r28, 0xFD	; 253
- 422:	de 4f       	sbci	r29, 0xFE	; 254
- 424:	88 81       	ld	r24, Y
- 426:	c3 50       	subi	r28, 0x03	; 3
- 428:	d1 40       	sbci	r29, 0x01	; 1
- 42a:	48 2b       	or	r20, r24
+ 402:	cc 5f       	subi	r28, 0xFC	; 252
+ 404:	de 4f       	sbci	r29, 0xFE	; 254
+ 406:	38 81       	ld	r19, Y
+ 408:	c4 50       	subi	r28, 0x04	; 4
+ 40a:	d1 40       	sbci	r29, 0x01	; 1
+ 40c:	e3 2f       	mov	r30, r19
+ 40e:	03 2e       	mov	r0, r19
+ 410:	00 0c       	add	r0, r0
+ 412:	ff 0b       	sbc	r31, r31
+ 414:	50 e0       	ldi	r21, 0x00	; 0
+ 416:	03 2e       	mov	r0, r19
+ 418:	02 c0       	rjmp	.+4      	; 0x41e <__EEPROM_REGION_LENGTH__+0x1e>
+ 41a:	44 0f       	add	r20, r20
+ 41c:	55 1f       	adc	r21, r21
+ 41e:	0a 94       	dec	r0
+ 420:	e2 f7       	brpl	.-8      	; 0x41a <__EEPROM_REGION_LENGTH__+0x1a>
+ 422:	cd 5f       	subi	r28, 0xFD	; 253
+ 424:	de 4f       	sbci	r29, 0xFE	; 254
+ 426:	88 81       	ld	r24, Y
+ 428:	c3 50       	subi	r28, 0x03	; 3
+ 42a:	d1 40       	sbci	r29, 0x01	; 1
+ 42c:	48 2b       	or	r20, r24
 					byteBuffer |= (recivedBit2 << (byteBufferPointer + 1));
- 42c:	31 96       	adiw	r30, 0x01	; 1
- 42e:	89 2f       	mov	r24, r25
- 430:	90 e0       	ldi	r25, 0x00	; 0
- 432:	02 c0       	rjmp	.+4      	; 0x438 <__EEPROM_REGION_LENGTH__+0x38>
- 434:	88 0f       	add	r24, r24
- 436:	99 1f       	adc	r25, r25
- 438:	ea 95       	dec	r30
- 43a:	e2 f7       	brpl	.-8      	; 0x434 <__EEPROM_REGION_LENGTH__+0x34>
- 43c:	84 2b       	or	r24, r20
- 43e:	cd 5f       	subi	r28, 0xFD	; 253
- 440:	de 4f       	sbci	r29, 0xFE	; 254
- 442:	88 83       	st	Y, r24
- 444:	c3 50       	subi	r28, 0x03	; 3
- 446:	d1 40       	sbci	r29, 0x01	; 1
+ 42e:	31 96       	adiw	r30, 0x01	; 1
+ 430:	89 2f       	mov	r24, r25
+ 432:	90 e0       	ldi	r25, 0x00	; 0
+ 434:	02 c0       	rjmp	.+4      	; 0x43a <__EEPROM_REGION_LENGTH__+0x3a>
+ 436:	88 0f       	add	r24, r24
+ 438:	99 1f       	adc	r25, r25
+ 43a:	ea 95       	dec	r30
+ 43c:	e2 f7       	brpl	.-8      	; 0x436 <__EEPROM_REGION_LENGTH__+0x36>
+ 43e:	84 2b       	or	r24, r20
+ 440:	cd 5f       	subi	r28, 0xFD	; 253
+ 442:	de 4f       	sbci	r29, 0xFE	; 254
+ 444:	88 83       	st	Y, r24
+ 446:	c3 50       	subi	r28, 0x03	; 3
+ 448:	d1 40       	sbci	r29, 0x01	; 1
 					byteBufferPointer += 2;
- 448:	3e 5f       	subi	r19, 0xFE	; 254
- 44a:	cc 5f       	subi	r28, 0xFC	; 252
- 44c:	de 4f       	sbci	r29, 0xFE	; 254
- 44e:	38 83       	st	Y, r19
- 450:	c4 50       	subi	r28, 0x04	; 4
- 452:	d1 40       	sbci	r29, 0x01	; 1
+ 44a:	3e 5f       	subi	r19, 0xFE	; 254
+ 44c:	cc 5f       	subi	r28, 0xFC	; 252
+ 44e:	de 4f       	sbci	r29, 0xFE	; 254
+ 450:	38 83       	st	Y, r19
+ 452:	c4 50       	subi	r28, 0x04	; 4
+ 454:	d1 40       	sbci	r29, 0x01	; 1
 					
 					if (byteBufferPointer >= 8) {
- 454:	38 30       	cpi	r19, 0x08	; 8
- 456:	0c f4       	brge	.+2      	; 0x45a <__EEPROM_REGION_LENGTH__+0x5a>
- 458:	6b ce       	rjmp	.-810    	; 0x130 <_ZN6System5startEv+0xb0>
+ 456:	38 30       	cpi	r19, 0x08	; 8
+ 458:	0c f4       	brge	.+2      	; 0x45c <__EEPROM_REGION_LENGTH__+0x5c>
+ 45a:	6a ce       	rjmp	.-812    	; 0x130 <_ZN6System5startEv+0xb0>
 						
 						int8_t recived = byteBuffer;
 						byteBuffer = 0;
- 45a:	cd 5f       	subi	r28, 0xFD	; 253
- 45c:	de 4f       	sbci	r29, 0xFE	; 254
- 45e:	18 82       	st	Y, r1
- 460:	c3 50       	subi	r28, 0x03	; 3
- 462:	d1 40       	sbci	r29, 0x01	; 1
+ 45c:	cd 5f       	subi	r28, 0xFD	; 253
+ 45e:	de 4f       	sbci	r29, 0xFE	; 254
+ 460:	18 82       	st	Y, r1
+ 462:	c3 50       	subi	r28, 0x03	; 3
+ 464:	d1 40       	sbci	r29, 0x01	; 1
 						byteBufferPointer = 0;
- 464:	cc 5f       	subi	r28, 0xFC	; 252
- 466:	de 4f       	sbci	r29, 0xFE	; 254
- 468:	18 82       	st	Y, r1
- 46a:	c4 50       	subi	r28, 0x04	; 4
- 46c:	d1 40       	sbci	r29, 0x01	; 1
+ 466:	cc 5f       	subi	r28, 0xFC	; 252
+ 468:	de 4f       	sbci	r29, 0xFE	; 254
+ 46a:	18 82       	st	Y, r1
+ 46c:	c4 50       	subi	r28, 0x04	; 4
+ 46e:	d1 40       	sbci	r29, 0x01	; 1
 						
 						if (remainingRecivePackets == 0 && recived > 0 && !isSending() && !isReading()) {
- 46e:	ce 5f       	subi	r28, 0xFE	; 254
- 470:	de 4f       	sbci	r29, 0xFE	; 254
- 472:	98 81       	ld	r25, Y
- 474:	c2 50       	subi	r28, 0x02	; 2
- 476:	d1 40       	sbci	r29, 0x01	; 1
- 478:	91 11       	cpse	r25, r1
- 47a:	1d c0       	rjmp	.+58     	; 0x4b6 <__EEPROM_REGION_LENGTH__+0xb6>
- 47c:	18 16       	cp	r1, r24
- 47e:	dc f4       	brge	.+54     	; 0x4b6 <__EEPROM_REGION_LENGTH__+0xb6>
+ 470:	ce 5f       	subi	r28, 0xFE	; 254
+ 472:	de 4f       	sbci	r29, 0xFE	; 254
+ 474:	98 81       	ld	r25, Y
+ 476:	c2 50       	subi	r28, 0x02	; 2
+ 478:	d1 40       	sbci	r29, 0x01	; 1
+ 47a:	91 11       	cpse	r25, r1
+ 47c:	1d c0       	rjmp	.+58     	; 0x4b8 <__EEPROM_REGION_LENGTH__+0xb8>
+ 47e:	18 16       	cp	r1, r24
+ 480:	dc f4       	brge	.+54     	; 0x4b8 <__EEPROM_REGION_LENGTH__+0xb8>
 	public: bool isDataSend() {
 		return sendDataLength == 0 && !isSending();
 	}
 
 	public: bool isSending() {
 		return remainingSendPackets >= 0 && doSend;
- 480:	77 23       	and	r23, r23
- 482:	4c f0       	brlt	.+18     	; 0x496 <__EEPROM_REGION_LENGTH__+0x96>
- 484:	ca 5f       	subi	r28, 0xFA	; 250
- 486:	de 4f       	sbci	r29, 0xFE	; 254
- 488:	38 81       	ld	r19, Y
- 48a:	c6 50       	subi	r28, 0x06	; 6
- 48c:	d1 40       	sbci	r29, 0x01	; 1
- 48e:	31 11       	cpse	r19, r1
- 490:	03 c0       	rjmp	.+6      	; 0x498 <__EEPROM_REGION_LENGTH__+0x98>
- 492:	36 2f       	mov	r19, r22
- 494:	01 c0       	rjmp	.+2      	; 0x498 <__EEPROM_REGION_LENGTH__+0x98>
- 496:	36 2f       	mov	r19, r22
+ 482:	77 23       	and	r23, r23
+ 484:	4c f0       	brlt	.+18     	; 0x498 <__EEPROM_REGION_LENGTH__+0x98>
+ 486:	ca 5f       	subi	r28, 0xFA	; 250
+ 488:	de 4f       	sbci	r29, 0xFE	; 254
+ 48a:	38 81       	ld	r19, Y
+ 48c:	c6 50       	subi	r28, 0x06	; 6
+ 48e:	d1 40       	sbci	r29, 0x01	; 1
+ 490:	31 11       	cpse	r19, r1
+ 492:	03 c0       	rjmp	.+6      	; 0x49a <__EEPROM_REGION_LENGTH__+0x9a>
+ 494:	36 2f       	mov	r19, r22
+ 496:	01 c0       	rjmp	.+2      	; 0x49a <__EEPROM_REGION_LENGTH__+0x9a>
+ 498:	36 2f       	mov	r19, r22
 						
 						int8_t recived = byteBuffer;
 						byteBuffer = 0;
 						byteBufferPointer = 0;
 						
 						if (remainingRecivePackets == 0 && recived > 0 && !isSending() && !isReading()) {
- 498:	31 11       	cpse	r19, r1
- 49a:	0d c0       	rjmp	.+26     	; 0x4b6 <__EEPROM_REGION_LENGTH__+0xb6>
+ 49a:	31 11       	cpse	r19, r1
+ 49c:	0d c0       	rjmp	.+26     	; 0x4b8 <__EEPROM_REGION_LENGTH__+0xb8>
 	public: bool isSending() {
 		return remainingSendPackets >= 0 && doSend;
 	}
 	
 	public: bool isReading() {
 		return remainingRecivePackets > 0 && doRead;
- 49c:	19 16       	cp	r1, r25
- 49e:	2c f4       	brge	.+10     	; 0x4aa <__EEPROM_REGION_LENGTH__+0xaa>
- 4a0:	49 81       	ldd	r20, Y+1	; 0x01
- 4a2:	41 11       	cpse	r20, r1
- 4a4:	03 c0       	rjmp	.+6      	; 0x4ac <__EEPROM_REGION_LENGTH__+0xac>
- 4a6:	43 2f       	mov	r20, r19
- 4a8:	01 c0       	rjmp	.+2      	; 0x4ac <__EEPROM_REGION_LENGTH__+0xac>
- 4aa:	43 2f       	mov	r20, r19
+ 49e:	19 16       	cp	r1, r25
+ 4a0:	2c f4       	brge	.+10     	; 0x4ac <__EEPROM_REGION_LENGTH__+0xac>
+ 4a2:	49 81       	ldd	r20, Y+1	; 0x01
+ 4a4:	41 11       	cpse	r20, r1
+ 4a6:	03 c0       	rjmp	.+6      	; 0x4ae <__EEPROM_REGION_LENGTH__+0xae>
+ 4a8:	43 2f       	mov	r20, r19
+ 4aa:	01 c0       	rjmp	.+2      	; 0x4ae <__EEPROM_REGION_LENGTH__+0xae>
+ 4ac:	43 2f       	mov	r20, r19
 						
 						int8_t recived = byteBuffer;
 						byteBuffer = 0;
 						byteBufferPointer = 0;
 						
 						if (remainingRecivePackets == 0 && recived > 0 && !isSending() && !isReading()) {
- 4ac:	41 11       	cpse	r20, r1
- 4ae:	02 c0       	rjmp	.+4      	; 0x4b4 <__EEPROM_REGION_LENGTH__+0xb4>
- 4b0:	62 2f       	mov	r22, r18
- 4b2:	01 c0       	rjmp	.+2      	; 0x4b6 <__EEPROM_REGION_LENGTH__+0xb6>
- 4b4:	63 2f       	mov	r22, r19
- 4b6:	66 23       	and	r22, r22
- 4b8:	b1 f0       	breq	.+44     	; 0x4e6 <__EEPROM_REGION_LENGTH__+0xe6>
+ 4ae:	41 11       	cpse	r20, r1
+ 4b0:	02 c0       	rjmp	.+4      	; 0x4b6 <__EEPROM_REGION_LENGTH__+0xb6>
+ 4b2:	62 2f       	mov	r22, r18
+ 4b4:	01 c0       	rjmp	.+2      	; 0x4b8 <__EEPROM_REGION_LENGTH__+0xb8>
+ 4b6:	63 2f       	mov	r22, r19
+ 4b8:	66 23       	and	r22, r22
+ 4ba:	b1 f0       	breq	.+44     	; 0x4e8 <__EEPROM_REGION_LENGTH__+0xe8>
 							
 							// Set RemainingPackets to recived Value and Start Reading
 							doRead = true;
- 4ba:	91 e0       	ldi	r25, 0x01	; 1
- 4bc:	99 83       	std	Y+1, r25	; 0x01
+ 4bc:	91 e0       	ldi	r25, 0x01	; 1
+ 4be:	99 83       	std	Y+1, r25	; 0x01
 							remainingRecivePackets = recived;
- 4be:	ce 5f       	subi	r28, 0xFE	; 254
- 4c0:	de 4f       	sbci	r29, 0xFE	; 254
- 4c2:	88 83       	st	Y, r24
- 4c4:	c2 50       	subi	r28, 0x02	; 2
- 4c6:	d1 40       	sbci	r29, 0x01	; 1
+ 4c0:	ce 5f       	subi	r28, 0xFE	; 254
+ 4c2:	de 4f       	sbci	r29, 0xFE	; 254
+ 4c4:	88 83       	st	Y, r24
+ 4c6:	c2 50       	subi	r28, 0x02	; 2
+ 4c8:	d1 40       	sbci	r29, 0x01	; 1
 							recivedData[recived] = {0};
- 4c8:	e2 e0       	ldi	r30, 0x02	; 2
- 4ca:	f0 e0       	ldi	r31, 0x00	; 0
- 4cc:	ec 0f       	add	r30, r28
- 4ce:	fd 1f       	adc	r31, r29
- 4d0:	e8 0f       	add	r30, r24
- 4d2:	f1 1d       	adc	r31, r1
- 4d4:	87 fd       	sbrc	r24, 7
- 4d6:	fa 95       	dec	r31
- 4d8:	10 82       	st	Z, r1
+ 4ca:	e2 e0       	ldi	r30, 0x02	; 2
+ 4cc:	f0 e0       	ldi	r31, 0x00	; 0
+ 4ce:	ec 0f       	add	r30, r28
+ 4d0:	fd 1f       	adc	r31, r29
+ 4d2:	e8 0f       	add	r30, r24
+ 4d4:	f1 1d       	adc	r31, r1
+ 4d6:	87 fd       	sbrc	r24, 7
+ 4d8:	fa 95       	dec	r31
+ 4da:	10 82       	st	Z, r1
 							recivedDataLength = recived;
- 4da:	cf 5f       	subi	r28, 0xFF	; 255
- 4dc:	de 4f       	sbci	r29, 0xFE	; 254
- 4de:	88 83       	st	Y, r24
- 4e0:	c1 50       	subi	r28, 0x01	; 1
- 4e2:	d1 40       	sbci	r29, 0x01	; 1
- 4e4:	25 ce       	rjmp	.-950    	; 0x130 <_ZN6System5startEv+0xb0>
+ 4dc:	cf 5f       	subi	r28, 0xFF	; 255
+ 4de:	de 4f       	sbci	r29, 0xFE	; 254
+ 4e0:	88 83       	st	Y, r24
+ 4e2:	c1 50       	subi	r28, 0x01	; 1
+ 4e4:	d1 40       	sbci	r29, 0x01	; 1
+ 4e6:	24 ce       	rjmp	.-952    	; 0x130 <_ZN6System5startEv+0xb0>
 	public: bool isSending() {
 		return remainingSendPackets >= 0 && doSend;
 	}
 	
 	public: bool isReading() {
 		return remainingRecivePackets > 0 && doRead;
- 4e6:	19 16       	cp	r1, r25
- 4e8:	2c f4       	brge	.+10     	; 0x4f4 <__EEPROM_REGION_LENGTH__+0xf4>
- 4ea:	29 81       	ldd	r18, Y+1	; 0x01
- 4ec:	21 11       	cpse	r18, r1
- 4ee:	03 c0       	rjmp	.+6      	; 0x4f6 <__EEPROM_REGION_LENGTH__+0xf6>
- 4f0:	26 2f       	mov	r18, r22
- 4f2:	01 c0       	rjmp	.+2      	; 0x4f6 <__EEPROM_REGION_LENGTH__+0xf6>
- 4f4:	26 2f       	mov	r18, r22
+ 4e8:	19 16       	cp	r1, r25
+ 4ea:	2c f4       	brge	.+10     	; 0x4f6 <__EEPROM_REGION_LENGTH__+0xf6>
+ 4ec:	29 81       	ldd	r18, Y+1	; 0x01
+ 4ee:	21 11       	cpse	r18, r1
+ 4f0:	03 c0       	rjmp	.+6      	; 0x4f8 <__EEPROM_REGION_LENGTH__+0xf8>
+ 4f2:	26 2f       	mov	r18, r22
+ 4f4:	01 c0       	rjmp	.+2      	; 0x4f8 <__EEPROM_REGION_LENGTH__+0xf8>
+ 4f6:	26 2f       	mov	r18, r22
 							recivedDataLength = recived;
 							return;
 							
 						}
 						
 						if (isReading() && remainingRecivePackets > 0) {
- 4f6:	22 23       	and	r18, r18
- 4f8:	19 f0       	breq	.+6      	; 0x500 <__EEPROM_REGION_LENGTH__+0x100>
- 4fa:	19 16       	cp	r1, r25
- 4fc:	0c f4       	brge	.+2      	; 0x500 <__EEPROM_REGION_LENGTH__+0x100>
- 4fe:	62 2f       	mov	r22, r18
- 500:	66 23       	and	r22, r22
- 502:	09 f4       	brne	.+2      	; 0x506 <__EEPROM_REGION_LENGTH__+0x106>
- 504:	15 ce       	rjmp	.-982    	; 0x130 <_ZN6System5startEv+0xb0>
+ 4f8:	22 23       	and	r18, r18
+ 4fa:	19 f0       	breq	.+6      	; 0x502 <__EEPROM_REGION_LENGTH__+0x102>
+ 4fc:	19 16       	cp	r1, r25
+ 4fe:	0c f4       	brge	.+2      	; 0x502 <__EEPROM_REGION_LENGTH__+0x102>
+ 500:	62 2f       	mov	r22, r18
+ 502:	66 23       	and	r22, r22
+ 504:	09 f4       	brne	.+2      	; 0x508 <__EEPROM_REGION_LENGTH__+0x108>
+ 506:	14 ce       	rjmp	.-984    	; 0x130 <_ZN6System5startEv+0xb0>
 							
 							// Add recived Value to recivedPackets and count as Packet
 							recivedData[recivedDataLength - remainingRecivePackets] = recived;
- 506:	cf 5f       	subi	r28, 0xFF	; 255
- 508:	de 4f       	sbci	r29, 0xFE	; 254
- 50a:	e8 81       	ld	r30, Y
- 50c:	c1 50       	subi	r28, 0x01	; 1
- 50e:	d1 40       	sbci	r29, 0x01	; 1
- 510:	0e 2e       	mov	r0, r30
- 512:	00 0c       	add	r0, r0
- 514:	ff 0b       	sbc	r31, r31
- 516:	e9 1b       	sub	r30, r25
- 518:	f1 09       	sbc	r31, r1
- 51a:	97 fd       	sbrc	r25, 7
- 51c:	f3 95       	inc	r31
- 51e:	22 e0       	ldi	r18, 0x02	; 2
- 520:	30 e0       	ldi	r19, 0x00	; 0
- 522:	2c 0f       	add	r18, r28
- 524:	3d 1f       	adc	r19, r29
- 526:	e2 0f       	add	r30, r18
- 528:	f3 1f       	adc	r31, r19
- 52a:	80 83       	st	Z, r24
+ 508:	cf 5f       	subi	r28, 0xFF	; 255
+ 50a:	de 4f       	sbci	r29, 0xFE	; 254
+ 50c:	e8 81       	ld	r30, Y
+ 50e:	c1 50       	subi	r28, 0x01	; 1
+ 510:	d1 40       	sbci	r29, 0x01	; 1
+ 512:	0e 2e       	mov	r0, r30
+ 514:	00 0c       	add	r0, r0
+ 516:	ff 0b       	sbc	r31, r31
+ 518:	e9 1b       	sub	r30, r25
+ 51a:	f1 09       	sbc	r31, r1
+ 51c:	97 fd       	sbrc	r25, 7
+ 51e:	f3 95       	inc	r31
+ 520:	22 e0       	ldi	r18, 0x02	; 2
+ 522:	30 e0       	ldi	r19, 0x00	; 0
+ 524:	2c 0f       	add	r18, r28
+ 526:	3d 1f       	adc	r19, r29
+ 528:	e2 0f       	add	r30, r18
+ 52a:	f3 1f       	adc	r31, r19
+ 52c:	80 83       	st	Z, r24
 							remainingRecivePackets--;
- 52c:	91 50       	subi	r25, 0x01	; 1
- 52e:	ce 5f       	subi	r28, 0xFE	; 254
- 530:	de 4f       	sbci	r29, 0xFE	; 254
- 532:	98 83       	st	Y, r25
- 534:	c2 50       	subi	r28, 0x02	; 2
- 536:	d1 40       	sbci	r29, 0x01	; 1
+ 52e:	91 50       	subi	r25, 0x01	; 1
+ 530:	ce 5f       	subi	r28, 0xFE	; 254
+ 532:	de 4f       	sbci	r29, 0xFE	; 254
+ 534:	98 83       	st	Y, r25
+ 536:	c2 50       	subi	r28, 0x02	; 2
+ 538:	d1 40       	sbci	r29, 0x01	; 1
 							
 							if (remainingRecivePackets <= 0) {
- 538:	19 16       	cp	r1, r25
- 53a:	0c f4       	brge	.+2      	; 0x53e <__EEPROM_REGION_LENGTH__+0x13e>
- 53c:	f9 cd       	rjmp	.-1038   	; 0x130 <_ZN6System5startEv+0xb0>
+ 53a:	19 16       	cp	r1, r25
+ 53c:	0c f4       	brge	.+2      	; 0x540 <__EEPROM_REGION_LENGTH__+0x140>
+ 53e:	f8 cd       	rjmp	.-1040   	; 0x130 <_ZN6System5startEv+0xb0>
 								
 								doRead = false;
- 53e:	19 82       	std	Y+1, r1	; 0x01
- 540:	f7 cd       	rjmp	.-1042   	; 0x130 <_ZN6System5startEv+0xb0>
+ 540:	19 82       	std	Y+1, r1	; 0x01
+ 542:	f6 cd       	rjmp	.-1044   	; 0x130 <_ZN6System5startEv+0xb0>
 	public: bool isSending() {
 		return remainingSendPackets >= 0 && doSend;
 	}
 	
 	public: bool isReading() {
 		return remainingRecivePackets > 0 && doRead;
- 542:	ce 5f       	subi	r28, 0xFE	; 254
- 544:	de 4f       	sbci	r29, 0xFE	; 254
- 546:	88 81       	ld	r24, Y
- 548:	c2 50       	subi	r28, 0x02	; 2
- 54a:	d1 40       	sbci	r29, 0x01	; 1
- 54c:	18 16       	cp	r1, r24
- 54e:	2c f4       	brge	.+10     	; 0x55a <__EEPROM_REGION_LENGTH__+0x15a>
- 550:	89 81       	ldd	r24, Y+1	; 0x01
- 552:	81 11       	cpse	r24, r1
- 554:	03 c0       	rjmp	.+6      	; 0x55c <__EEPROM_REGION_LENGTH__+0x15c>
- 556:	83 2f       	mov	r24, r19
- 558:	01 c0       	rjmp	.+2      	; 0x55c <__EEPROM_REGION_LENGTH__+0x15c>
- 55a:	83 2f       	mov	r24, r19
+ 544:	ce 5f       	subi	r28, 0xFE	; 254
+ 546:	de 4f       	sbci	r29, 0xFE	; 254
+ 548:	88 81       	ld	r24, Y
+ 54a:	c2 50       	subi	r28, 0x02	; 2
+ 54c:	d1 40       	sbci	r29, 0x01	; 1
+ 54e:	18 16       	cp	r1, r24
+ 550:	2c f4       	brge	.+10     	; 0x55c <__EEPROM_REGION_LENGTH__+0x15c>
+ 552:	89 81       	ldd	r24, Y+1	; 0x01
+ 554:	81 11       	cpse	r24, r1
+ 556:	03 c0       	rjmp	.+6      	; 0x55e <__EEPROM_REGION_LENGTH__+0x15e>
+ 558:	83 2f       	mov	r24, r19
+ 55a:	01 c0       	rjmp	.+2      	; 0x55e <__EEPROM_REGION_LENGTH__+0x15e>
+ 55c:	83 2f       	mov	r24, r19
 							
 						}
 						
 					}
 					
 				} else if (!isReading() && remainingSendPackets >= 0) {
- 55c:	81 11       	cpse	r24, r1
- 55e:	03 c0       	rjmp	.+6      	; 0x566 <__EEPROM_REGION_LENGTH__+0x166>
- 560:	77 23       	and	r23, r23
- 562:	0c f0       	brlt	.+2      	; 0x566 <__EEPROM_REGION_LENGTH__+0x166>
- 564:	36 2f       	mov	r19, r22
- 566:	33 23       	and	r19, r19
- 568:	09 f4       	brne	.+2      	; 0x56c <__EEPROM_REGION_LENGTH__+0x16c>
- 56a:	e2 cd       	rjmp	.-1084   	; 0x130 <_ZN6System5startEv+0xb0>
+ 55e:	81 11       	cpse	r24, r1
+ 560:	03 c0       	rjmp	.+6      	; 0x568 <__EEPROM_REGION_LENGTH__+0x168>
+ 562:	77 23       	and	r23, r23
+ 564:	0c f0       	brlt	.+2      	; 0x568 <__EEPROM_REGION_LENGTH__+0x168>
+ 566:	36 2f       	mov	r19, r22
+ 568:	33 23       	and	r19, r19
+ 56a:	09 f4       	brne	.+2      	; 0x56e <__EEPROM_REGION_LENGTH__+0x16e>
+ 56c:	e1 cd       	rjmp	.-1086   	; 0x130 <_ZN6System5startEv+0xb0>
 					
 					// Send Ports Low
 					PORTC = (PORTC & ~PORTC_COM_1);
- 56c:	88 b1       	in	r24, 0x08	; 8
- 56e:	8e 7f       	andi	r24, 0xFE	; 254
- 570:	88 b9       	out	0x08, r24	; 8
+ 56e:	88 b1       	in	r24, 0x08	; 8
+ 570:	8e 7f       	andi	r24, 0xFE	; 254
+ 572:	88 b9       	out	0x08, r24	; 8
 					PORTC = (PORTC & ~PORTC_COM_2);
- 572:	88 b1       	in	r24, 0x08	; 8
- 574:	8d 7f       	andi	r24, 0xFD	; 253
- 576:	88 b9       	out	0x08, r24	; 8
+ 574:	88 b1       	in	r24, 0x08	; 8
+ 576:	8d 7f       	andi	r24, 0xFD	; 253
+ 578:	88 b9       	out	0x08, r24	; 8
 					
 					if (byteBufferPointer2 >= 8) {
- 578:	c7 5f       	subi	r28, 0xF7	; 247
- 57a:	dd 4f       	sbci	r29, 0xFD	; 253
- 57c:	88 81       	ld	r24, Y
- 57e:	c9 50       	subi	r28, 0x09	; 9
- 580:	d2 40       	sbci	r29, 0x02	; 2
- 582:	88 30       	cpi	r24, 0x08	; 8
- 584:	14 f1       	brlt	.+68     	; 0x5ca <__EEPROM_REGION_LENGTH__+0x1ca>
+ 57a:	c7 5f       	subi	r28, 0xF7	; 247
+ 57c:	dd 4f       	sbci	r29, 0xFD	; 253
+ 57e:	88 81       	ld	r24, Y
+ 580:	c9 50       	subi	r28, 0x09	; 9
+ 582:	d2 40       	sbci	r29, 0x02	; 2
+ 584:	88 30       	cpi	r24, 0x08	; 8
+ 586:	14 f1       	brlt	.+68     	; 0x5cc <__EEPROM_REGION_LENGTH__+0x1cc>
 						
 						byteBuffer2 = sendData[sendDataLength - remainingSendPackets];
- 586:	ca 5f       	subi	r28, 0xFA	; 250
- 588:	dd 4f       	sbci	r29, 0xFD	; 253
- 58a:	e8 81       	ld	r30, Y
- 58c:	c6 50       	subi	r28, 0x06	; 6
- 58e:	d2 40       	sbci	r29, 0x02	; 2
- 590:	c9 5f       	subi	r28, 0xF9	; 249
- 592:	dd 4f       	sbci	r29, 0xFD	; 253
- 594:	88 81       	ld	r24, Y
- 596:	c7 50       	subi	r28, 0x07	; 7
- 598:	d2 40       	sbci	r29, 0x02	; 2
- 59a:	0e 2e       	mov	r0, r30
- 59c:	00 0c       	add	r0, r0
- 59e:	ff 0b       	sbc	r31, r31
- 5a0:	e8 1b       	sub	r30, r24
- 5a2:	f1 09       	sbc	r31, r1
- 5a4:	87 fd       	sbrc	r24, 7
- 5a6:	f3 95       	inc	r31
- 5a8:	67 e0       	ldi	r22, 0x07	; 7
- 5aa:	71 e0       	ldi	r23, 0x01	; 1
- 5ac:	6c 0f       	add	r22, r28
- 5ae:	7d 1f       	adc	r23, r29
- 5b0:	e6 0f       	add	r30, r22
- 5b2:	f7 1f       	adc	r31, r23
- 5b4:	80 81       	ld	r24, Z
- 5b6:	c8 5f       	subi	r28, 0xF8	; 248
- 5b8:	dd 4f       	sbci	r29, 0xFD	; 253
- 5ba:	88 83       	st	Y, r24
- 5bc:	c8 50       	subi	r28, 0x08	; 8
- 5be:	d2 40       	sbci	r29, 0x02	; 2
+ 588:	ca 5f       	subi	r28, 0xFA	; 250
+ 58a:	dd 4f       	sbci	r29, 0xFD	; 253
+ 58c:	e8 81       	ld	r30, Y
+ 58e:	c6 50       	subi	r28, 0x06	; 6
+ 590:	d2 40       	sbci	r29, 0x02	; 2
+ 592:	c9 5f       	subi	r28, 0xF9	; 249
+ 594:	dd 4f       	sbci	r29, 0xFD	; 253
+ 596:	88 81       	ld	r24, Y
+ 598:	c7 50       	subi	r28, 0x07	; 7
+ 59a:	d2 40       	sbci	r29, 0x02	; 2
+ 59c:	0e 2e       	mov	r0, r30
+ 59e:	00 0c       	add	r0, r0
+ 5a0:	ff 0b       	sbc	r31, r31
+ 5a2:	e8 1b       	sub	r30, r24
+ 5a4:	f1 09       	sbc	r31, r1
+ 5a6:	87 fd       	sbrc	r24, 7
+ 5a8:	f3 95       	inc	r31
+ 5aa:	67 e0       	ldi	r22, 0x07	; 7
+ 5ac:	71 e0       	ldi	r23, 0x01	; 1
+ 5ae:	6c 0f       	add	r22, r28
+ 5b0:	7d 1f       	adc	r23, r29
+ 5b2:	e6 0f       	add	r30, r22
+ 5b4:	f7 1f       	adc	r31, r23
+ 5b6:	80 81       	ld	r24, Z
+ 5b8:	c8 5f       	subi	r28, 0xF8	; 248
+ 5ba:	dd 4f       	sbci	r29, 0xFD	; 253
+ 5bc:	88 83       	st	Y, r24
+ 5be:	c8 50       	subi	r28, 0x08	; 8
+ 5c0:	d2 40       	sbci	r29, 0x02	; 2
 						byteBufferPointer2 = 0;
- 5c0:	c7 5f       	subi	r28, 0xF7	; 247
- 5c2:	dd 4f       	sbci	r29, 0xFD	; 253
- 5c4:	18 82       	st	Y, r1
- 5c6:	c9 50       	subi	r28, 0x09	; 9
- 5c8:	d2 40       	sbci	r29, 0x02	; 2
+ 5c2:	c7 5f       	subi	r28, 0xF7	; 247
+ 5c4:	dd 4f       	sbci	r29, 0xFD	; 253
+ 5c6:	18 82       	st	Y, r1
+ 5c8:	c9 50       	subi	r28, 0x09	; 9
+ 5ca:	d2 40       	sbci	r29, 0x02	; 2
 						
 					}
 					
 					bool sendBit1 = (byteBuffer2 & (1 << (byteBufferPointer2 + 0)));
- 5ca:	c8 5f       	subi	r28, 0xF8	; 248
- 5cc:	dd 4f       	sbci	r29, 0xFD	; 253
- 5ce:	88 81       	ld	r24, Y
- 5d0:	c8 50       	subi	r28, 0x08	; 8
- 5d2:	d2 40       	sbci	r29, 0x02	; 2
- 5d4:	08 2e       	mov	r0, r24
- 5d6:	00 0c       	add	r0, r0
- 5d8:	99 0b       	sbc	r25, r25
- 5da:	c7 5f       	subi	r28, 0xF7	; 247
- 5dc:	dd 4f       	sbci	r29, 0xFD	; 253
- 5de:	48 81       	ld	r20, Y
- 5e0:	c9 50       	subi	r28, 0x09	; 9
- 5e2:	d2 40       	sbci	r29, 0x02	; 2
- 5e4:	24 2f       	mov	r18, r20
- 5e6:	04 2e       	mov	r0, r20
- 5e8:	00 0c       	add	r0, r0
- 5ea:	33 0b       	sbc	r19, r19
- 5ec:	dc 01       	movw	r26, r24
- 5ee:	02 c0       	rjmp	.+4      	; 0x5f4 <__EEPROM_REGION_LENGTH__+0x1f4>
- 5f0:	b5 95       	asr	r27
- 5f2:	a7 95       	ror	r26
- 5f4:	4a 95       	dec	r20
- 5f6:	e2 f7       	brpl	.-8      	; 0x5f0 <__EEPROM_REGION_LENGTH__+0x1f0>
+ 5cc:	c8 5f       	subi	r28, 0xF8	; 248
+ 5ce:	dd 4f       	sbci	r29, 0xFD	; 253
+ 5d0:	88 81       	ld	r24, Y
+ 5d2:	c8 50       	subi	r28, 0x08	; 8
+ 5d4:	d2 40       	sbci	r29, 0x02	; 2
+ 5d6:	08 2e       	mov	r0, r24
+ 5d8:	00 0c       	add	r0, r0
+ 5da:	99 0b       	sbc	r25, r25
+ 5dc:	c7 5f       	subi	r28, 0xF7	; 247
+ 5de:	dd 4f       	sbci	r29, 0xFD	; 253
+ 5e0:	48 81       	ld	r20, Y
+ 5e2:	c9 50       	subi	r28, 0x09	; 9
+ 5e4:	d2 40       	sbci	r29, 0x02	; 2
+ 5e6:	24 2f       	mov	r18, r20
+ 5e8:	04 2e       	mov	r0, r20
+ 5ea:	00 0c       	add	r0, r0
+ 5ec:	33 0b       	sbc	r19, r19
+ 5ee:	dc 01       	movw	r26, r24
+ 5f0:	02 c0       	rjmp	.+4      	; 0x5f6 <__EEPROM_REGION_LENGTH__+0x1f6>
+ 5f2:	b5 95       	asr	r27
+ 5f4:	a7 95       	ror	r26
+ 5f6:	4a 95       	dec	r20
+ 5f8:	e2 f7       	brpl	.-8      	; 0x5f2 <__EEPROM_REGION_LENGTH__+0x1f2>
 					bool sendBit2 = (byteBuffer2 & (1 << (byteBufferPointer2 + 1)));
- 5f8:	2f 5f       	subi	r18, 0xFF	; 255
- 5fa:	3f 4f       	sbci	r19, 0xFF	; 255
- 5fc:	02 c0       	rjmp	.+4      	; 0x602 <__EEPROM_REGION_LENGTH__+0x202>
- 5fe:	95 95       	asr	r25
- 600:	87 95       	ror	r24
- 602:	2a 95       	dec	r18
- 604:	e2 f7       	brpl	.-8      	; 0x5fe <__EEPROM_REGION_LENGTH__+0x1fe>
- 606:	81 70       	andi	r24, 0x01	; 1
- 608:	99 27       	eor	r25, r25
+ 5fa:	2f 5f       	subi	r18, 0xFF	; 255
+ 5fc:	3f 4f       	sbci	r19, 0xFF	; 255
+ 5fe:	02 c0       	rjmp	.+4      	; 0x604 <__EEPROM_REGION_LENGTH__+0x204>
+ 600:	95 95       	asr	r25
+ 602:	87 95       	ror	r24
+ 604:	2a 95       	dec	r18
+ 606:	e2 f7       	brpl	.-8      	; 0x600 <__EEPROM_REGION_LENGTH__+0x200>
+ 608:	81 70       	andi	r24, 0x01	; 1
+ 60a:	99 27       	eor	r25, r25
 					PORTC = (PORTC & ~PORTC_COM_1) | (sendBit1 ? PORTC_COM_1 : 0);
- 60a:	28 b1       	in	r18, 0x08	; 8
- 60c:	2e 7f       	andi	r18, 0xFE	; 254
- 60e:	a0 ff       	sbrs	r26, 0
- 610:	02 c0       	rjmp	.+4      	; 0x616 <__EEPROM_REGION_LENGTH__+0x216>
- 612:	31 e0       	ldi	r19, 0x01	; 1
- 614:	01 c0       	rjmp	.+2      	; 0x618 <__EEPROM_REGION_LENGTH__+0x218>
- 616:	30 e0       	ldi	r19, 0x00	; 0
- 618:	23 2b       	or	r18, r19
- 61a:	28 b9       	out	0x08, r18	; 8
+ 60c:	28 b1       	in	r18, 0x08	; 8
+ 60e:	2e 7f       	andi	r18, 0xFE	; 254
+ 610:	a0 ff       	sbrs	r26, 0
+ 612:	02 c0       	rjmp	.+4      	; 0x618 <__EEPROM_REGION_LENGTH__+0x218>
+ 614:	31 e0       	ldi	r19, 0x01	; 1
+ 616:	01 c0       	rjmp	.+2      	; 0x61a <__EEPROM_REGION_LENGTH__+0x21a>
+ 618:	30 e0       	ldi	r19, 0x00	; 0
+ 61a:	23 2b       	or	r18, r19
+ 61c:	28 b9       	out	0x08, r18	; 8
 					PORTC = (PORTC & ~PORTC_COM_2) | (sendBit2 ? PORTC_COM_2 : 0);
- 61c:	28 b1       	in	r18, 0x08	; 8
- 61e:	2d 7f       	andi	r18, 0xFD	; 253
- 620:	89 2b       	or	r24, r25
- 622:	11 f0       	breq	.+4      	; 0x628 <__EEPROM_REGION_LENGTH__+0x228>
- 624:	92 e0       	ldi	r25, 0x02	; 2
- 626:	01 c0       	rjmp	.+2      	; 0x62a <__EEPROM_REGION_LENGTH__+0x22a>
- 628:	90 e0       	ldi	r25, 0x00	; 0
- 62a:	82 2f       	mov	r24, r18
- 62c:	89 2b       	or	r24, r25
- 62e:	88 b9       	out	0x08, r24	; 8
+ 61e:	28 b1       	in	r18, 0x08	; 8
+ 620:	2d 7f       	andi	r18, 0xFD	; 253
+ 622:	89 2b       	or	r24, r25
+ 624:	11 f0       	breq	.+4      	; 0x62a <__EEPROM_REGION_LENGTH__+0x22a>
+ 626:	92 e0       	ldi	r25, 0x02	; 2
+ 628:	01 c0       	rjmp	.+2      	; 0x62c <__EEPROM_REGION_LENGTH__+0x22c>
+ 62a:	90 e0       	ldi	r25, 0x00	; 0
+ 62c:	82 2f       	mov	r24, r18
+ 62e:	89 2b       	or	r24, r25
+ 630:	88 b9       	out	0x08, r24	; 8
 					byteBufferPointer2 += 2;
- 630:	c7 5f       	subi	r28, 0xF7	; 247
- 632:	dd 4f       	sbci	r29, 0xFD	; 253
- 634:	88 81       	ld	r24, Y
- 636:	c9 50       	subi	r28, 0x09	; 9
- 638:	d2 40       	sbci	r29, 0x02	; 2
- 63a:	8e 5f       	subi	r24, 0xFE	; 254
- 63c:	c7 5f       	subi	r28, 0xF7	; 247
- 63e:	dd 4f       	sbci	r29, 0xFD	; 253
- 640:	88 83       	st	Y, r24
- 642:	c9 50       	subi	r28, 0x09	; 9
- 644:	d2 40       	sbci	r29, 0x02	; 2
+ 632:	c7 5f       	subi	r28, 0xF7	; 247
+ 634:	dd 4f       	sbci	r29, 0xFD	; 253
+ 636:	88 81       	ld	r24, Y
+ 638:	c9 50       	subi	r28, 0x09	; 9
+ 63a:	d2 40       	sbci	r29, 0x02	; 2
+ 63c:	8e 5f       	subi	r24, 0xFE	; 254
+ 63e:	c7 5f       	subi	r28, 0xF7	; 247
+ 640:	dd 4f       	sbci	r29, 0xFD	; 253
+ 642:	88 83       	st	Y, r24
+ 644:	c9 50       	subi	r28, 0x09	; 9
+ 646:	d2 40       	sbci	r29, 0x02	; 2
 							
 					if (byteBufferPointer2 >= 8) remainingSendPackets--;
- 646:	88 30       	cpi	r24, 0x08	; 8
- 648:	5c f0       	brlt	.+22     	; 0x660 <__EEPROM_REGION_LENGTH__+0x260>
- 64a:	c9 5f       	subi	r28, 0xF9	; 249
- 64c:	dd 4f       	sbci	r29, 0xFD	; 253
- 64e:	88 81       	ld	r24, Y
- 650:	c7 50       	subi	r28, 0x07	; 7
- 652:	d2 40       	sbci	r29, 0x02	; 2
- 654:	81 50       	subi	r24, 0x01	; 1
- 656:	c9 5f       	subi	r28, 0xF9	; 249
- 658:	dd 4f       	sbci	r29, 0xFD	; 253
- 65a:	88 83       	st	Y, r24
- 65c:	c7 50       	subi	r28, 0x07	; 7
- 65e:	d2 40       	sbci	r29, 0x02	; 2
+ 648:	88 30       	cpi	r24, 0x08	; 8
+ 64a:	5c f0       	brlt	.+22     	; 0x662 <__EEPROM_REGION_LENGTH__+0x262>
+ 64c:	c9 5f       	subi	r28, 0xF9	; 249
+ 64e:	dd 4f       	sbci	r29, 0xFD	; 253
+ 650:	88 81       	ld	r24, Y
+ 652:	c7 50       	subi	r28, 0x07	; 7
+ 654:	d2 40       	sbci	r29, 0x02	; 2
+ 656:	81 50       	subi	r24, 0x01	; 1
+ 658:	c9 5f       	subi	r28, 0xF9	; 249
+ 65a:	dd 4f       	sbci	r29, 0xFD	; 253
+ 65c:	88 83       	st	Y, r24
+ 65e:	c7 50       	subi	r28, 0x07	; 7
+ 660:	d2 40       	sbci	r29, 0x02	; 2
 					
 					if (remainingSendPackets < 0) {
- 660:	c9 5f       	subi	r28, 0xF9	; 249
- 662:	dd 4f       	sbci	r29, 0xFD	; 253
- 664:	88 81       	ld	r24, Y
- 666:	c7 50       	subi	r28, 0x07	; 7
- 668:	d2 40       	sbci	r29, 0x02	; 2
- 66a:	88 23       	and	r24, r24
- 66c:	0c f0       	brlt	.+2      	; 0x670 <__EEPROM_REGION_LENGTH__+0x270>
- 66e:	60 cd       	rjmp	.-1344   	; 0x130 <_ZN6System5startEv+0xb0>
+ 662:	c9 5f       	subi	r28, 0xF9	; 249
+ 664:	dd 4f       	sbci	r29, 0xFD	; 253
+ 666:	88 81       	ld	r24, Y
+ 668:	c7 50       	subi	r28, 0x07	; 7
+ 66a:	d2 40       	sbci	r29, 0x02	; 2
+ 66c:	88 23       	and	r24, r24
+ 66e:	0c f0       	brlt	.+2      	; 0x672 <__EEPROM_REGION_LENGTH__+0x272>
+ 670:	5f cd       	rjmp	.-1346   	; 0x130 <_ZN6System5startEv+0xb0>
 						
 						doSend = false;
- 670:	ca 5f       	subi	r28, 0xFA	; 250
- 672:	de 4f       	sbci	r29, 0xFE	; 254
- 674:	18 82       	st	Y, r1
- 676:	c6 50       	subi	r28, 0x06	; 6
- 678:	d1 40       	sbci	r29, 0x01	; 1
+ 672:	ca 5f       	subi	r28, 0xFA	; 250
+ 674:	de 4f       	sbci	r29, 0xFE	; 254
+ 676:	18 82       	st	Y, r1
+ 678:	c6 50       	subi	r28, 0x06	; 6
+ 67a:	d1 40       	sbci	r29, 0x01	; 1
 						sendDataLength = 0;
- 67a:	ca 5f       	subi	r28, 0xFA	; 250
- 67c:	dd 4f       	sbci	r29, 0xFD	; 253
- 67e:	18 82       	st	Y, r1
- 680:	c6 50       	subi	r28, 0x06	; 6
- 682:	d2 40       	sbci	r29, 0x02	; 2
- 684:	55 cd       	rjmp	.-1366   	; 0x130 <_ZN6System5startEv+0xb0>
+ 67c:	ca 5f       	subi	r28, 0xFA	; 250
+ 67e:	dd 4f       	sbci	r29, 0xFD	; 253
+ 680:	18 82       	st	Y, r1
+ 682:	c6 50       	subi	r28, 0x06	; 6
+ 684:	d2 40       	sbci	r29, 0x02	; 2
+ 686:	54 cd       	rjmp	.-1368   	; 0x130 <_ZN6System5startEv+0xb0>
 						
 					}
 					
 				}
 				
 			} else if (hasHandledClckPulse && !clckHigh) {
- 686:	c6 5f       	subi	r28, 0xF6	; 246
- 688:	dd 4f       	sbci	r29, 0xFD	; 253
- 68a:	28 81       	ld	r18, Y
- 68c:	ca 50       	subi	r28, 0x0A	; 10
- 68e:	d2 40       	sbci	r29, 0x02	; 2
- 690:	22 23       	and	r18, r18
- 692:	09 f4       	brne	.+2      	; 0x696 <__EEPROM_REGION_LENGTH__+0x296>
- 694:	4d cd       	rjmp	.-1382   	; 0x130 <_ZN6System5startEv+0xb0>
- 696:	18 16       	cp	r1, r24
- 698:	19 06       	cpc	r1, r25
- 69a:	0c f4       	brge	.+2      	; 0x69e <__EEPROM_REGION_LENGTH__+0x29e>
- 69c:	49 cd       	rjmp	.-1390   	; 0x130 <_ZN6System5startEv+0xb0>
+ 688:	c6 5f       	subi	r28, 0xF6	; 246
+ 68a:	dd 4f       	sbci	r29, 0xFD	; 253
+ 68c:	28 81       	ld	r18, Y
+ 68e:	ca 50       	subi	r28, 0x0A	; 10
+ 690:	d2 40       	sbci	r29, 0x02	; 2
+ 692:	22 23       	and	r18, r18
+ 694:	09 f4       	brne	.+2      	; 0x698 <__EEPROM_REGION_LENGTH__+0x298>
+ 696:	4c cd       	rjmp	.-1384   	; 0x130 <_ZN6System5startEv+0xb0>
+ 698:	18 16       	cp	r1, r24
+ 69a:	19 06       	cpc	r1, r25
+ 69c:	0c f4       	brge	.+2      	; 0x6a0 <__EEPROM_REGION_LENGTH__+0x2a0>
+ 69e:	48 cd       	rjmp	.-1392   	; 0x130 <_ZN6System5startEv+0xb0>
 				
 				// Start sending wehen reading complete
 				if (requestSend && !doRead) {
- 69e:	cb 5f       	subi	r28, 0xFB	; 251
- 6a0:	de 4f       	sbci	r29, 0xFE	; 254
- 6a2:	88 81       	ld	r24, Y
- 6a4:	c5 50       	subi	r28, 0x05	; 5
- 6a6:	d1 40       	sbci	r29, 0x01	; 1
- 6a8:	88 23       	and	r24, r24
- 6aa:	71 f0       	breq	.+28     	; 0x6c8 <__EEPROM_REGION_LENGTH__+0x2c8>
- 6ac:	89 81       	ldd	r24, Y+1	; 0x01
- 6ae:	81 11       	cpse	r24, r1
- 6b0:	0b c0       	rjmp	.+22     	; 0x6c8 <__EEPROM_REGION_LENGTH__+0x2c8>
+ 6a0:	cb 5f       	subi	r28, 0xFB	; 251
+ 6a2:	de 4f       	sbci	r29, 0xFE	; 254
+ 6a4:	88 81       	ld	r24, Y
+ 6a6:	c5 50       	subi	r28, 0x05	; 5
+ 6a8:	d1 40       	sbci	r29, 0x01	; 1
+ 6aa:	88 23       	and	r24, r24
+ 6ac:	71 f0       	breq	.+28     	; 0x6ca <__EEPROM_REGION_LENGTH__+0x2ca>
+ 6ae:	89 81       	ldd	r24, Y+1	; 0x01
+ 6b0:	81 11       	cpse	r24, r1
+ 6b2:	0b c0       	rjmp	.+22     	; 0x6ca <__EEPROM_REGION_LENGTH__+0x2ca>
 					doSend = true;
- 6b2:	81 e0       	ldi	r24, 0x01	; 1
- 6b4:	ca 5f       	subi	r28, 0xFA	; 250
- 6b6:	de 4f       	sbci	r29, 0xFE	; 254
- 6b8:	88 83       	st	Y, r24
- 6ba:	c6 50       	subi	r28, 0x06	; 6
- 6bc:	d1 40       	sbci	r29, 0x01	; 1
+ 6b4:	81 e0       	ldi	r24, 0x01	; 1
+ 6b6:	ca 5f       	subi	r28, 0xFA	; 250
+ 6b8:	de 4f       	sbci	r29, 0xFE	; 254
+ 6ba:	88 83       	st	Y, r24
+ 6bc:	c6 50       	subi	r28, 0x06	; 6
+ 6be:	d1 40       	sbci	r29, 0x01	; 1
 					requestSend = false;
- 6be:	cb 5f       	subi	r28, 0xFB	; 251
- 6c0:	de 4f       	sbci	r29, 0xFE	; 254
- 6c2:	18 82       	st	Y, r1
- 6c4:	c5 50       	subi	r28, 0x05	; 5
- 6c6:	d1 40       	sbci	r29, 0x01	; 1
+ 6c0:	cb 5f       	subi	r28, 0xFB	; 251
+ 6c2:	de 4f       	sbci	r29, 0xFE	; 254
+ 6c4:	18 82       	st	Y, r1
+ 6c6:	c5 50       	subi	r28, 0x05	; 5
+ 6c8:	d1 40       	sbci	r29, 0x01	; 1
 				}
 				
 				hasHandledClckPulse = false;
- 6c8:	c6 5f       	subi	r28, 0xF6	; 246
- 6ca:	dd 4f       	sbci	r29, 0xFD	; 253
- 6cc:	18 82       	st	Y, r1
- 6ce:	ca 50       	subi	r28, 0x0A	; 10
- 6d0:	d2 40       	sbci	r29, 0x02	; 2
- 6d2:	2e cd       	rjmp	.-1444   	; 0x130 <_ZN6System5startEv+0xb0>
+ 6ca:	c6 5f       	subi	r28, 0xF6	; 246
+ 6cc:	dd 4f       	sbci	r29, 0xFD	; 253
+ 6ce:	18 82       	st	Y, r1
+ 6d0:	ca 50       	subi	r28, 0x0A	; 10
+ 6d2:	d2 40       	sbci	r29, 0x02	; 2
+ 6d4:	2d cd       	rjmp	.-1446   	; 0x130 <_ZN6System5startEv+0xb0>
 
-000006d4 <main>:
+000006d6 <main>:
  */ 
 
 #include "system.cpp"
 
 int main(void)
 {
- 6d4:	cf 93       	push	r28
- 6d6:	df 93       	push	r29
- 6d8:	00 d0       	rcall	.+0      	; 0x6da <main+0x6>
- 6da:	1f 92       	push	r1
- 6dc:	cd b7       	in	r28, 0x3d	; 61
- 6de:	de b7       	in	r29, 0x3e	; 62
+ 6d6:	cf 93       	push	r28
+ 6d8:	df 93       	push	r29
+ 6da:	00 d0       	rcall	.+0      	; 0x6dc <main+0x6>
+ 6dc:	1f 92       	push	r1
+ 6de:	cd b7       	in	r28, 0x3d	; 61
+ 6e0:	de b7       	in	r29, 0x3e	; 62
 	
 	System sys;
- 6e0:	81 e0       	ldi	r24, 0x01	; 1
- 6e2:	89 83       	std	Y+1, r24	; 0x01
- 6e4:	1b 82       	std	Y+3, r1	; 0x03
- 6e6:	1a 82       	std	Y+2, r1	; 0x02
+ 6e2:	81 e0       	ldi	r24, 0x01	; 1
+ 6e4:	89 83       	std	Y+1, r24	; 0x01
+ 6e6:	1b 82       	std	Y+3, r1	; 0x03
+ 6e8:	1a 82       	std	Y+2, r1	; 0x02
 	sys.start();
- 6e8:	ce 01       	movw	r24, r28
- 6ea:	01 96       	adiw	r24, 0x01	; 1
- 6ec:	0e 94 40 00 	call	0x80	; 0x80 <_ZN6System5startEv>
+ 6ea:	ce 01       	movw	r24, r28
+ 6ec:	01 96       	adiw	r24, 0x01	; 1
+ 6ee:	0e 94 40 00 	call	0x80	; 0x80 <_ZN6System5startEv>
 
-000006f0 <eeprom_read_byte>:
- 6f0:	f9 99       	sbic	0x1f, 1	; 31
- 6f2:	fe cf       	rjmp	.-4      	; 0x6f0 <eeprom_read_byte>
- 6f4:	92 bd       	out	0x22, r25	; 34
- 6f6:	81 bd       	out	0x21, r24	; 33
- 6f8:	f8 9a       	sbi	0x1f, 0	; 31
- 6fa:	99 27       	eor	r25, r25
- 6fc:	80 b5       	in	r24, 0x20	; 32
- 6fe:	08 95       	ret
+000006f2 <eeprom_read_byte>:
+ 6f2:	f9 99       	sbic	0x1f, 1	; 31
+ 6f4:	fe cf       	rjmp	.-4      	; 0x6f2 <eeprom_read_byte>
+ 6f6:	92 bd       	out	0x22, r25	; 34
+ 6f8:	81 bd       	out	0x21, r24	; 33
+ 6fa:	f8 9a       	sbi	0x1f, 0	; 31
+ 6fc:	99 27       	eor	r25, r25
+ 6fe:	80 b5       	in	r24, 0x20	; 32
+ 700:	08 95       	ret
 
-00000700 <eeprom_update_byte>:
- 700:	26 2f       	mov	r18, r22
+00000702 <eeprom_update_byte>:
+ 702:	26 2f       	mov	r18, r22
 
-00000702 <eeprom_update_r18>:
- 702:	f9 99       	sbic	0x1f, 1	; 31
- 704:	fe cf       	rjmp	.-4      	; 0x702 <eeprom_update_r18>
- 706:	92 bd       	out	0x22, r25	; 34
- 708:	81 bd       	out	0x21, r24	; 33
- 70a:	f8 9a       	sbi	0x1f, 0	; 31
- 70c:	01 97       	sbiw	r24, 0x01	; 1
- 70e:	00 b4       	in	r0, 0x20	; 32
- 710:	02 16       	cp	r0, r18
- 712:	39 f0       	breq	.+14     	; 0x722 <eeprom_update_r18+0x20>
- 714:	1f ba       	out	0x1f, r1	; 31
- 716:	20 bd       	out	0x20, r18	; 32
- 718:	0f b6       	in	r0, 0x3f	; 63
- 71a:	f8 94       	cli
- 71c:	fa 9a       	sbi	0x1f, 2	; 31
- 71e:	f9 9a       	sbi	0x1f, 1	; 31
- 720:	0f be       	out	0x3f, r0	; 63
- 722:	08 95       	ret
+00000704 <eeprom_update_r18>:
+ 704:	f9 99       	sbic	0x1f, 1	; 31
+ 706:	fe cf       	rjmp	.-4      	; 0x704 <eeprom_update_r18>
+ 708:	92 bd       	out	0x22, r25	; 34
+ 70a:	81 bd       	out	0x21, r24	; 33
+ 70c:	f8 9a       	sbi	0x1f, 0	; 31
+ 70e:	01 97       	sbiw	r24, 0x01	; 1
+ 710:	00 b4       	in	r0, 0x20	; 32
+ 712:	02 16       	cp	r0, r18
+ 714:	39 f0       	breq	.+14     	; 0x724 <eeprom_update_r18+0x20>
+ 716:	1f ba       	out	0x1f, r1	; 31
+ 718:	20 bd       	out	0x20, r18	; 32
+ 71a:	0f b6       	in	r0, 0x3f	; 63
+ 71c:	f8 94       	cli
+ 71e:	fa 9a       	sbi	0x1f, 2	; 31
+ 720:	f9 9a       	sbi	0x1f, 1	; 31
+ 722:	0f be       	out	0x3f, r0	; 63
+ 724:	08 95       	ret
 
-00000724 <_exit>:
- 724:	f8 94       	cli
+00000726 <_exit>:
+ 726:	f8 94       	cli
 
-00000726 <__stop_program>:
- 726:	ff cf       	rjmp	.-2      	; 0x726 <__stop_program>
+00000728 <__stop_program>:
+ 728:	ff cf       	rjmp	.-2      	; 0x728 <__stop_program>

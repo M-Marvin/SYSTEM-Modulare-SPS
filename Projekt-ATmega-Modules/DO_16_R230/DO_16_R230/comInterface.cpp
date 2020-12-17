@@ -15,6 +15,8 @@
  * PORTC 2-3
  * PORTC Clock
  * PINC 4
+ * PORTC Enable
+ * PINC 5
  */ 
 
 #include <avr/io.h>
