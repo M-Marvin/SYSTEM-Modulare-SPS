@@ -48,13 +48,13 @@ class System {
 						
 						int8_t portStates[2] = {0};
 							
-							portStates[0] = PORTC;
-							portStates[1] = PORTC;
+						portStates[1] = PORTD;
+						portStates[0] = PORTB;
 						
-							com.setSendData(portStates, 2);
-							com.startSending();
+						com.setSendData(portStates, 2);
+						com.startSending();
 							
-						} else if (dataLength == 3) {
+					} else if (dataLength == 3) {
 						
 						PORTD = data[1];
 						PORTB = data[0];
