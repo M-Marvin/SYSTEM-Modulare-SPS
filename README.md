@@ -28,7 +28,7 @@ Kurzbezeichnungs-Legende:
 
 Beispiel: DO - 16 - R230
 
-D = Digital (1 oder 0 / Ein oder Aus)
+D = Digital (1 oder 0 / Ein oder Aus) 
 O = Output (Ausgang)
 
 16 = Schnittstelle 16 mal vorhanden
