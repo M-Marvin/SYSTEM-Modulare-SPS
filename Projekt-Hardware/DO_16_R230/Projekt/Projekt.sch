@@ -226,17 +226,6 @@ Wire Wire Line
 Connection ~ 5050 3100
 Wire Wire Line
 	4550 3100 5050 3100
-$Comp
-L Connector:Conn_01x18_Female X1
-U 1 1 60D510A4
-P 5850 1300
-F 0 "X1" V 6015 1230 50  0000 C CNN
-F 1 "DO 16-2" V 5924 1230 50  0000 C CNN
-F 2 "Footprints:Klemmleiste_R5mm_B8mm_Kopie" H 5850 1300 50  0001 C CNN
-F 3 "~" H 5850 1300 50  0001 C CNN
-	1    5850 1300
-	0    -1   -1   0   
-$EndComp
 Wire Wire Line
 	12100 9050 11950 9050
 Connection ~ 6600 8300
@@ -1446,4 +1435,37 @@ F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/ATmega328_P%20AVR%20MCU%20w
 $EndComp
 Wire Wire Line
 	12350 5700 13150 5700
+$Comp
+L Connector_Generic:Conn_01x08 J6
+U 1 1 5FE4606B
+P 6350 1300
+F 0 "J6" H 6430 1292 50  0000 L CNN
+F 1 "Conn_01x08" H 6430 1201 50  0000 L CNN
+F 2 "Footprints:RND_Steckklemme_8" H 6350 1300 50  0001 C CNN
+F 3 "~" H 6350 1300 50  0001 C CNN
+	1    6350 1300
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x08 J5
+U 1 1 5FE8513C
+P 5550 1300
+F 0 "J5" H 5630 1292 50  0000 L CNN
+F 1 "Conn_01x08" H 5630 1201 50  0000 L CNN
+F 2 "Footprints:RND_Steckklemme_8" H 5550 1300 50  0001 C CNN
+F 3 "~" H 5550 1300 50  0001 C CNN
+	1    5550 1300
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x02 J4
+U 1 1 5FEC149D
+P 5050 1300
+F 0 "J4" H 5130 1292 50  0000 L CNN
+F 1 "Conn_01x02" H 5130 1201 50  0000 L CNN
+F 2 "Footprints:RND_Steckklemme_2" H 5050 1300 50  0001 C CNN
+F 3 "~" H 5050 1300 50  0001 C CNN
+	1    5050 1300
+	0    -1   -1   0   
+$EndComp
 $EndSCHEMATC

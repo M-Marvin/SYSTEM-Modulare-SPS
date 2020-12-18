@@ -1,4 +1,4 @@
-16960262282186313
+16963478881569490
 Battery
 BatteryHolder_Bulgin_BX0036_1xC
 Bulgin Battery Holder, BX0036, Battery Type C (https://www.bulgin.com/products/pub/media/bulgin/data/Battery_holders.pdf)
@@ -46304,6 +46304,20 @@ Lötpad
 0
 1
 1
+Footprints
+RND_Steckklemme_2
+
+
+0
+2
+2
+Footprints
+RND_Steckklemme_8
+
+
+0
+8
+8
 Footprints
 RND_Terminal_Blocks_13Pol
 
