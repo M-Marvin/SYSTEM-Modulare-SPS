@@ -15,10 +15,6 @@ Comment4 ""
 $EndDescr
 Wire Wire Line
 	5950 8300 5800 8300
-Wire Wire Line
-	6600 8300 6600 8200
-Wire Wire Line
-	6350 8300 6600 8300
 $Comp
 L Switch:SW_Push SW1
 U 1 1 5FD1832B
@@ -228,15 +224,12 @@ Wire Wire Line
 	4550 3100 5050 3100
 Wire Wire Line
 	12100 9050 11950 9050
-Connection ~ 6600 8300
-Wire Wire Line
-	6600 9850 6600 8300
 Wire Wire Line
 	2750 9850 6600 9850
 Wire Wire Line
 	2800 8500 2750 8500
 Wire Wire Line
-	6550 8500 6550 8150
+	6550 8500 6550 8300
 Wire Wire Line
 	5800 8500 6550 8500
 Wire Wire Line
@@ -1468,4 +1461,11 @@ F 3 "~" H 5050 1300 50  0001 C CNN
 	1    5050 1300
 	0    -1   -1   0   
 $EndComp
+Wire Wire Line
+	6600 8200 6600 9850
+Wire Wire Line
+	6350 8300 6550 8300
+Connection ~ 6550 8300
+Wire Wire Line
+	6550 8300 6550 8150
 $EndSCHEMATC
