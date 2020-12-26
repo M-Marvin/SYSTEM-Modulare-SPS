@@ -57,7 +57,6 @@ Wire Wire Line
 	7050 8650 7450 8650
 Wire Wire Line
 	7450 8650 7950 8650
-Connection ~ 7950 8650
 Connection ~ 7450 8750
 Wire Wire Line
 	7000 8750 7450 8750
@@ -78,8 +77,6 @@ Wire Wire Line
 Wire Wire Line
 	11950 8450 12150 8450
 Wire Wire Line
-	7200 8100 11300 8100
-Wire Wire Line
 	11300 8550 11300 8100
 Wire Wire Line
 	11450 8550 11300 8550
@@ -99,7 +96,7 @@ Wire Wire Line
 Wire Wire Line
 	9950 5100 9950 5700
 Wire Wire Line
-	8350 8150 11000 8150
+	8350 8150 9550 8150
 Connection ~ 8350 8150
 Wire Wire Line
 	8350 6200 8350 8150
@@ -259,8 +256,6 @@ Wire Wire Line
 Wire Wire Line
 	11950 8650 11450 8650
 Wire Wire Line
-	7950 8650 11450 8650
-Wire Wire Line
 	11450 8850 11950 8850
 $Comp
 L Connector_Generic:Conn_02x07_Odd_Even J2
@@ -279,8 +274,6 @@ Wire Wire Line
 	7450 8550 7200 8550
 Wire Wire Line
 	8150 8450 7950 8450
-Wire Wire Line
-	8150 8200 12150 8200
 Wire Wire Line
 	6600 8200 8150 8200
 Connection ~ 8150 8200
@@ -1241,7 +1234,6 @@ F 3 "https://standexelectronics.com/wp-content/uploads/datasheet_reed_relay_DIP.
 $EndComp
 Wire Wire Line
 	7950 8950 11450 8950
-Connection ~ 11450 8650
 Connection ~ 11450 8750
 Connection ~ 11450 8850
 Wire Wire Line
@@ -1468,4 +1460,62 @@ Wire Wire Line
 Connection ~ 6550 8300
 Wire Wire Line
 	6550 8300 6550 8150
+Wire Wire Line
+	8150 8200 9950 8200
+Wire Wire Line
+	7200 8100 9550 8100
+Connection ~ 11450 8650
+Connection ~ 7950 8650
+Wire Wire Line
+	7950 8650 11450 8650
+$Comp
+L Device:CP C1
+U 1 1 60095F7F
+P 9750 7900
+F 0 "C1" V 10005 7900 50  0000 C CNN
+F 1 "10uF" V 9914 7900 50  0000 C CNN
+F 2 "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm" H 9788 7750 50  0001 C CNN
+F 3 "~" H 9750 7900 50  0001 C CNN
+	1    9750 7900
+	0    1    -1   0   
+$EndComp
+$Comp
+L Device:CP C2
+U 1 1 600D41B0
+P 9750 8450
+F 0 "C2" V 10005 8450 50  0000 C CNN
+F 1 "10uF" V 9914 8450 50  0000 C CNN
+F 2 "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm" H 9788 8300 50  0001 C CNN
+F 3 "~" H 9750 8450 50  0001 C CNN
+	1    9750 8450
+	0    1    -1   0   
+$EndComp
+Wire Wire Line
+	9900 8450 9950 8450
+Wire Wire Line
+	9950 8450 9950 8200
+Connection ~ 9950 8200
+Wire Wire Line
+	9950 8200 12150 8200
+Wire Wire Line
+	9600 8450 9550 8450
+Wire Wire Line
+	9550 8450 9550 8150
+Connection ~ 9550 8150
+Wire Wire Line
+	9550 8150 9950 8150
+Wire Wire Line
+	9900 7900 9950 7900
+Wire Wire Line
+	9950 7900 9950 8150
+Connection ~ 9950 8150
+Wire Wire Line
+	9950 8150 11000 8150
+Wire Wire Line
+	9550 7900 9550 8100
+Connection ~ 9550 8100
+Wire Wire Line
+	9550 8100 11300 8100
+Wire Wire Line
+	9550 7900 9600 7900
 $EndSCHEMATC
