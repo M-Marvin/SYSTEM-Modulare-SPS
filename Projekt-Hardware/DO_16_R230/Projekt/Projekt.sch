@@ -303,9 +303,7 @@ Wire Wire Line
 Wire Wire Line
 	11850 7350 11850 5650
 Wire Wire Line
-	13450 7450 13450 5650
-Wire Wire Line
-	14250 5650 14250 7500
+	14250 5650 14250 7450
 Wire Wire Line
 	2250 5650 2250 6900
 Wire Wire Line
@@ -395,7 +393,6 @@ Wire Wire Line
 	13800 5650 13450 5650
 Wire Wire Line
 	13800 5400 13800 5650
-Connection ~ 13450 5650
 Wire Wire Line
 	13450 4650 13450 5650
 Wire Wire Line
@@ -1242,69 +1239,7 @@ Connection ~ 11450 8950
 Text Notes 12350 9050 0    50   ~ 0
 Pinbelegung:\nGND - - +5V\n-5V - - RESET\nCOM IN 1 - - COM IN 1\nCOM IN 2 - - COM IN 2\nCOM OUT 1 - - COM OUT 1\nCOM OUT 2 - - COM OUT 2\nCLOCK - - ENABLE
 Wire Wire Line
-	3300 6850 3300 7900
-Wire Wire Line
-	14250 7500 5500 7500
-Wire Wire Line
-	5500 7500 5500 7900
-Wire Wire Line
-	5400 7900 5400 7450
-Wire Wire Line
-	5400 7450 13450 7450
-Wire Wire Line
-	12650 7400 5300 7400
-Wire Wire Line
-	5300 7400 5300 7900
-Wire Wire Line
-	5200 7900 5200 7350
-Wire Wire Line
-	5200 7350 11850 7350
-Wire Wire Line
-	11100 7300 5100 7300
-Wire Wire Line
-	5100 7300 5100 7900
-Wire Wire Line
-	5000 7900 5000 7250
-Wire Wire Line
-	5000 7250 10250 7250
-Wire Wire Line
-	9450 7200 4900 7200
-Wire Wire Line
-	4900 7200 4900 7900
-Wire Wire Line
-	8650 7150 4800 7150
-Wire Wire Line
-	4800 7150 4800 7900
-Wire Wire Line
-	7850 7100 3800 7100
-Wire Wire Line
-	3800 7100 3800 7900
-Wire Wire Line
-	7050 7050 3700 7050
-Wire Wire Line
-	3700 7050 3700 7900
-Wire Wire Line
-	6250 7000 3600 7000
-Wire Wire Line
-	3600 7000 3600 7750
-Wire Wire Line
-	5450 6950 3500 6950
-Wire Wire Line
-	3500 6950 3500 7800
-Wire Wire Line
 	5450 5650 5450 6950
-Wire Wire Line
-	4650 6900 3400 6900
-Wire Wire Line
-	3850 6850 3300 6850
-Wire Wire Line
-	3200 6850 3050 6850
-Wire Wire Line
-	3100 6900 2250 6900
-Wire Wire Line
-	3100 6900 3100 7900
-Wire Wire Line
-	3200 6850 3200 7900
 Wire Wire Line
 	4600 7600 5800 7600
 Wire Wire Line
@@ -1357,12 +1292,10 @@ F 3 "~" H 2600 8000 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	3500 7800 2700 7800
-Connection ~ 3500 7800
 Wire Wire Line
 	3500 7800 3500 7900
 Wire Wire Line
 	2600 7750 3600 7750
-Connection ~ 3600 7750
 Wire Wire Line
 	3600 7750 3600 7900
 Wire Wire Line
@@ -1393,8 +1326,6 @@ Wire Wire Line
 	6550 9900 6550 8500
 Connection ~ 6550 8500
 Wire Wire Line
-	3400 6900 3400 7650
-Wire Wire Line
 	3400 7650 2400 7650
 Wire Wire Line
 	2400 7650 2400 8350
@@ -1402,7 +1333,6 @@ Wire Wire Line
 	2400 8350 2600 8350
 Wire Wire Line
 	2600 8350 2600 8300
-Connection ~ 3400 7650
 Wire Wire Line
 	3400 7650 3400 7900
 Wire Wire Line
@@ -1462,28 +1392,15 @@ Wire Wire Line
 	6550 8300 6550 8150
 Wire Wire Line
 	8150 8200 9950 8200
-Wire Wire Line
-	7200 8100 9550 8100
 Connection ~ 11450 8650
 Connection ~ 7950 8650
 Wire Wire Line
 	7950 8650 11450 8650
 $Comp
 L Device:CP C1
-U 1 1 60095F7F
-P 9750 7900
-F 0 "C1" V 10005 7900 50  0000 C CNN
-F 1 "10uF" V 9914 7900 50  0000 C CNN
-F 2 "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm" H 9788 7750 50  0001 C CNN
-F 3 "~" H 9750 7900 50  0001 C CNN
-	1    9750 7900
-	0    1    -1   0   
-$EndComp
-$Comp
-L Device:CP C2
 U 1 1 600D41B0
 P 9750 8450
-F 0 "C2" V 10005 8450 50  0000 C CNN
+F 0 "C1" V 10005 8450 50  0000 C CNN
 F 1 "10uF" V 9914 8450 50  0000 C CNN
 F 2 "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm" H 9788 8300 50  0001 C CNN
 F 3 "~" H 9750 8450 50  0001 C CNN
@@ -1502,20 +1419,100 @@ Wire Wire Line
 Wire Wire Line
 	9550 8450 9550 8150
 Connection ~ 9550 8150
+Text Label 10200 8100 0    50   ~ 0
+-5V
+Text Label 10200 8200 0    50   ~ 0
++5V
+Text Label 10450 8150 0    50   ~ 0
+GND
 Wire Wire Line
-	9550 8150 9950 8150
+	9550 8150 11000 8150
 Wire Wire Line
-	9900 7900 9950 7900
+	7200 8100 11300 8100
+Text Label 11050 9250 0    50   ~ 0
+CLOCK
+Text Label 10650 9300 0    50   ~ 0
+ENABLE
+Text Label 11050 8650 0    50   ~ 0
+COM_IN_1
+Text Label 11050 8750 0    50   ~ 0
+COM_IN_2
+Text Label 11000 8850 0    50   ~ 0
+COM_OUT_1
+Text Label 11000 8950 0    50   ~ 0
+COM_OUT_2
 Wire Wire Line
-	9950 7900 9950 8150
-Connection ~ 9950 8150
+	3300 6900 3300 7900
 Wire Wire Line
-	9950 8150 11000 8150
+	2250 6900 3300 6900
 Wire Wire Line
-	9550 7900 9550 8100
-Connection ~ 9550 8100
+	3400 7650 3400 6850
+Connection ~ 3400 7650
 Wire Wire Line
-	9550 8100 11300 8100
+	3400 6850 3850 6850
 Wire Wire Line
-	9550 7900 9600 7900
+	4650 6900 3500 6900
+Connection ~ 3500 7800
+Wire Wire Line
+	3500 6900 3500 7800
+Wire Wire Line
+	5450 6950 3100 6950
+Wire Wire Line
+	3100 6950 3100 7900
+Wire Wire Line
+	13450 5650 13450 7500
+Connection ~ 13450 5650
+Wire Wire Line
+	3050 6850 3200 6850
+Wire Wire Line
+	3200 6850 3200 7900
+Wire Wire Line
+	7850 7100 5300 7100
+Wire Wire Line
+	5300 7100 5300 7900
+Wire Wire Line
+	8650 7150 3800 7150
+Wire Wire Line
+	3800 7150 3800 7900
+Wire Wire Line
+	9450 7200 3700 7200
+Wire Wire Line
+	3700 7200 3700 7900
+Wire Wire Line
+	10250 7250 5200 7250
+Wire Wire Line
+	5400 7050 5400 7900
+Wire Wire Line
+	5500 7000 6250 7000
+Wire Wire Line
+	5500 7000 5500 7900
+Wire Wire Line
+	5400 7050 7050 7050
+Wire Wire Line
+	5200 7250 5200 7900
+Wire Wire Line
+	5100 7300 11100 7300
+Wire Wire Line
+	5100 7300 5100 7900
+Wire Wire Line
+	11850 7350 5000 7350
+Wire Wire Line
+	5000 7350 5000 7900
+Wire Wire Line
+	12650 7400 4800 7400
+Wire Wire Line
+	4800 7400 4800 7900
+Wire Wire Line
+	14250 7450 4900 7450
+Wire Wire Line
+	4900 7450 4900 7900
+Wire Wire Line
+	3600 7750 3600 7500
+Wire Wire Line
+	3600 7500 13450 7500
+Connection ~ 3600 7750
+Text Label 12000 8550 0    50   ~ 0
+RESET
+Text Notes 1050 8150 0    50   ~ 0
+Programmieranschluss J3\nVorerst nicht auf Leiterplatte\nenthalten.\n\nIC wird zur programmierung\naus IC-Sockel entfernt
 $EndSCHEMATC
